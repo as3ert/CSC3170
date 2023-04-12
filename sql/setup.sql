@@ -9,9 +9,11 @@ USE `proj` ;
 CREATE TABLE employees
 (
     EMPLOYEE_ID DECIMAL(6, 0) PRIMARY KEY NOT NULL,
-    PROJECT_ID DECIMAL(6, 0),
     MANAGE_PROJECT_ID DECIMAL(6, 0),
     EMPLOYEE_NAME VARCHAR(20) NOT NULL,
+    AGE DECIMAL(2, 0) NOT NULL,
+    ENTRY_DATE DATE NOT NULL,
+    GENDER VARCHAR(20) NOT NULL,
     SALARY DECIMAL(8, 2) NOT NULL,
     POSITION VARCHAR(20) NOT NULL,
     LOCATION VARCHAR(20) NOT NULL
@@ -55,4 +57,15 @@ CREATE TABLE subcompanies
     SUBCOMPANY_ID DECIMAL(6, 0) PRIMARY KEY NOT NULL,
     BUDGET VARCHAR(20) NOT NULL,
     LOCATION VARCHAR(20) NOT NULL
+);
+
+-- -----------------------------------------------------
+-- Create below: Table `proj`.`jobs`
+-- -----------------------------------------------------
+
+CREATE TABLE jobs
+(
+    EMPLOYEE_ID DECIMAL(6, 0) NOT NULL,
+    PROJECT_ID DECIMAL(6, 0) NOT NULL,
+    PRIMARY KEY (EMPLOYEE_ID, PROJECT_ID)
 );
