@@ -36,10 +36,10 @@ INSERT INTO `employees` (`EMPLOYEE_ID`, `EMPLOYEE_NAME`, `AGE`, `ENTRY_DATE`,
 ('000030', 'Brian', '28', '2021-08-29', 'Male', '11000', 'Testing', 'Berlin');
 
 INSERT INTO `administers` (`ADMINISTER_ID`, `SUBCOMPANY_ID`,
-                           `ADMINISTER_NAME`, `LOCATION`) VALUES
-('100001', '000001', 'Lucas', 'Shenzhen'),
-('100002', '000002', 'Lily', 'New York'),
-('100003', '000003', 'Tom', 'Berlin');
+                           `ADMINISTER_NAME`) VALUES
+('100001', '000001', 'Lucas'),
+('100002', '000002', 'Lily'),
+('100003', '000003', 'Tom');
 
 INSERT INTO `subcompanies` (`SUBCOMPANY_ID`, `BUDGET`, `LOCATION`) VALUES
 ('000001', '200000', 'Shenzhen'),

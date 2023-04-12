@@ -5,4 +5,6 @@ SELECT projects.PROJECT_ID, projects.PROJECT_NAME, administers.ADMINISTER_NAME,
        projects.FRONT_END_NUMBER, projects.BACK_END_NUMBER, projects.TESTING_NUMBER,
        employees.LOCATION
 FROM projects, employees, administers
-WHERE projects.PROJECT_ID = '200001';
+WHERE projects.PROJECT_ID = '200001' AND
+      projects.MANAGER_ID = employees.EMPLOYEE_ID AND
+      projects.ADMINISTER_ID = administers.ADMINISTER_ID;
