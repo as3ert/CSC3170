@@ -8,7 +8,7 @@ This is our implementation for the course project of CSC3170, 2023 Spring, CUHK(
 
 ## 2. Team Members
 
-Our team consists of the following members, listed in the table below (the team leader is shown in the first row, and is marked with 🚩 behind his/her name):
+Our team consists of the following members, listed in the table below (the team leader is shown in the first row, and is marked with 🚩 behind his name):
 
 <!-- change the info below to be the real case -->
 
