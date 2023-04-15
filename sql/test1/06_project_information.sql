@@ -1,7 +1,7 @@
 -- Return project information
 
 SELECT projects.PROJECT_ID, projects.PROJECT_NAME, administrators.ADMINISTRATOR_NAME,
-       employees.EMPLOYEE_NAME, projects.START_DATE, projects.END_DATE, 
+       employees.EMPLOYEE_NAME, projects.START_DATE, projects.END_DATE, managers.MANAGER_ID,
        projects.FRONT_END_NUMBER, projects.BACK_END_NUMBER, projects.TESTING_NUMBER,
        employees.LOCATION
 FROM projects, employees, administrators, managers
