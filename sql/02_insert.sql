@@ -35,8 +35,8 @@ INSERT INTO `employees` (`EMPLOYEE_ID`, `EMPLOYEE_NAME`, `AGE`, `ENTRY_DATE`,
 ('000029', 'Edward', '29', '2027-07-18', 'Female', '10000', 'Testing', 'Berlin'),
 ('000030', 'Brian', '28', '2021-08-29', 'Male', '11000', 'Testing', 'Berlin');
 
-INSERT INTO `administers` (`ADMINISTER_ID`, `SUBCOMPANY_ID`,
-                           `ADMINISTER_NAME`) VALUES
+INSERT INTO `administrators` (`ADMINISTRATOR_ID`, `SUBCOMPANY_ID`,
+                           `ADMINISTRATOR_NAME`) VALUES
 ('100001', '000001', 'Lucas'),
 ('100002', '000002', 'Lily'),
 ('100003', '000003', 'Tom');
