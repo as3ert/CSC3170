@@ -32,8 +32,8 @@
             exit;
           }
 
-          // 判断第一位是否是2
-          if($Worker_ID[0] != 2){
+          // 判断第一位是否是0
+          if($Worker_ID[0] != 0){
             echo "<script>javascript:alert('员工ID填写有误!');location.href='UI2.php';</script>";
             exit;
           }

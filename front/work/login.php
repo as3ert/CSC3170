@@ -41,42 +41,30 @@
     }
 }
 ?>
-<html>
+<html lang="en">
 <head>
 <title>Login</title>
 <meta charset="UTF-8">
-<link rel="stylesheet"  href="login.css" />
-<style>
-</style>
+<link rel="stylesheet"  href="login.css" >
 </head>
+
 <body>
 <div class="login" > 
-<table style="width: 100%;height:100%;" >
-
-     <form class="login-form" method="post" action="login.php"  enctype="multipart/form-data">
-      <table  align="center" width=350 height=230; style="font-family:宋体;font-size:25px;">
-      <tr align="center"> 
-          <td colspan="2" style="font-size:35px;">登录</td>
-      </tr>
-      <tr class="login_box">
-          <td align="center">User ID</td>
-          <td>
-          <input type="name" maxlength="20" name="name" placeholder="User ID" style="width:180px;font-size:20px;border-radius: 8px;" required="">
-          </td>
-      </tr>
-      <tr class="login_box">
-          <td align="center">Passward</td>
-          <td >
-          <input name="password" type="password" maxlength="16" placeholder="Passward" style="width:180px;font-size:20px;border-radius: 8px;" required="">
-      </td>
-      </tr>
-      <tr>
-        <td colspan="2" align="center">
-        <input type="submit" name='submit' value='Login' style="font-size:17px;border-radius: 12px;" class="btn"/>
-      </tr>
-   </table>
-   </form>
-</table>
+     <form class="login-form" method="post" action="login.php"  enctype="multipart/form-data">
+      <table  align="center" width=350 height=230; style="font-family:宋体;font-size:50px;">
+      <div class="login_box">
+          <input type="name" name="name" id="name" required="required">
+          <label for="name" >User ID</label>
+        </div>
+      <div class="login_box">
+        <input type="password" name='pwd' id='pwd' required="required">
+        <label for="pwd">Passward</label>
+      </div>
+      <a>
+      <input type="submit" name='submit' value='Login'  class="btn"/>    
+      </a>
+   </table>
+   </form>
 </div>
 </body>
 <html>
