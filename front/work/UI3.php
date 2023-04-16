@@ -14,7 +14,7 @@
         echo "<script>javascript:alert('未登录!');location.href='login.php';</script>";
         exit;
      }
-      $sql = "SELECT * FROM administers LEFT JOIN subcompanies ON administers.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administers.ADMINISTER_ID = {$id}";
+      $sql = "SELECT * FROM administrators LEFT JOIN subcompanies ON administrators.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
       $result = $mysqli->query($sql);
       $adminInfo = $result->fetch_assoc();
     $act = !empty($_GET['act']) ? trim($_GET['act']) : '';

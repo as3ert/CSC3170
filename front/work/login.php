@@ -4,16 +4,15 @@
     $name = $_POST['name'];
     $password = $_POST['password'];
 
-    // 判断第一位是0还是2，如果都不是报错
-
+    // 判断第一位是0还是1，如果都不是报错
     $first = $name[0];
-    if (!in_array($first, [0,2])) {
+    if (!in_array($first, [0,1])) {
     	echo "<script>javascript:alert('登录失败!');location.href='login.php';</script>";
     	exit;
     }
 
-    if ($first == 0) {
-	    $sql = "select * from administers where (ADMINISTER_ID='$name') and (PSSDWORD ='$password')";
+    if ($first == 1) {
+	    $sql = "select * from administrators where (ADMINISTRATOR_ID='$name') and (PASSWORD ='$password')";
 	    $result = $mysqli->query($sql);
 	    $row = $result->fetch_assoc();
 	    if ($row) {
@@ -24,8 +23,8 @@
     		echo "<script>javascript:alert('登录失败!');location.href='login.php';</script>";
     		exit;
 	    }
-    }elseif ($first == 1) {
-	    $sql = "select * from employees where (EMPLOYEE_ID='$name') and (PSSDWORD ='$password')";
+    }elseif ($first == 0) {
+	    $sql = "select * from employees where (EMPLOYEE_ID='$name') and (PASSWORD ='$password')";
 	    $result = $mysqli->query($sql);
 	    $row = $result->fetch_assoc();
 	    if ($row) {
@@ -57,7 +56,7 @@
      <form class="login-form" method="post" action="login.php"  enctype="multipart/form-data">
       <table  align="center" width=350 height=230; style="font-family:宋体;font-size:25px;">
       <tr align="center"> 
-          <td colspan="1" style="font-size:35px;">登录</td>
+          <td colspan="2" style="font-size:35px;">登录</td>
       </tr>
       <tr class="login_box">
           <td align="center">User ID</td>

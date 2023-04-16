@@ -14,7 +14,7 @@
         echo "<script>javascript:alert('未登录!');location.href='login.php';</script>";
         exit;
      }
-      $sql = "SELECT * FROM administers LEFT JOIN subcompanies ON administers.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administers.ADMINISTER_ID = {$id}";
+      $sql = "SELECT * FROM administrators LEFT JOIN subcompanies ON administrators.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administrators.ADMINISTRAtor_ID = {$id}";
       $result = $mysqli->query($sql);
       $adminInfo = $result->fetch_assoc();
     $act = !empty($_GET['act']) ? trim($_GET['act']) : '';
@@ -52,10 +52,10 @@
       <section id="basic-info">
         <h2>个人信息</h2>
         <div>
-          <label for="name" >Name: <?php echo $adminInfo['ADMINISTER_NAME']; ?></label>
+          <label for="name" >Name: <?php echo $adminInfo['ADMINISTRATOR_NAME']; ?></label>
         </div>
         <div>
-          <label for="ID" >ID: <?php echo $adminInfo['ADMINISTER_ID']; ?></label>
+          <label for="ID" >ID: <?php echo $adminInfo['ADMINISTRATOR_ID']; ?></label>
         </div>
         <h2>Project Information</h2>
         <h3>Project 1:</h3>
