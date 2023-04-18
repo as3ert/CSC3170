@@ -12,15 +12,15 @@ Our team consists of the following members, listed in the table below (the team 
 
 <!-- change the info below to be the real case -->
 
-| Student ID | Student Name | GitHub Account (in Email) | GitHub username |
-| ---------- | ------------ | ------------------------- |-----------------|
-| 120090086  | 李子健 🚩    | todo                      | todo |
-| 120090244  | 赵广昕       | as3ertpro@gmail.com       | [@as3ert](https://github.com/as3ert)        |
-| 120090581  | 丁奕杰       | todo                      | todo |
-| 120090873  | 张雨阳       | todo                      | todo |
-| 120090090  | 李浩贤       | todo                      | todo |
-| 121090344  | 刘铭昊       | todo                      | todo |
-| 120090102  | 曹若曦       | todo                      | todo |
+| Student ID | Student Name | GitHub Account (in Email)  | GitHub username |
+| ---------- | ------------ | -------------------------  |-----------------|
+| 120090086  | 李子健 🚩    | 120090086@link.cuhk.edu.cn | [@LucasL258](https://github.com/LucasL258)  |
+| 120090244  | 赵广昕       | as3ertpro@gmail.com        | [@as3ert](https://github.com/as3ert)        |
+| 120090581  | 丁奕杰       | todo                       | todo |
+| 120090873  | 张雨阳       | todo                       | todo |
+| 120090090  | 李浩贤       | todo                       | todo |
+| 121090344  | 刘铭昊       | todo                       | todo |
+| 120090102  | 曹若曦       | todo                       | todo |
 
 ## 3. Project Specification
 
