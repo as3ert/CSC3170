@@ -23,12 +23,10 @@
       $comInfo = $result->fetch_assoc();
 
       // 查询员工数量
-     /*
-      $sql = "SELECT count(*) as count from employees WHERE LOCATION = {$comInfo['LOCATION']}";
+      $sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$comInfo['LOCATION']}'";
+      // var_dump($sql);exit();
       $result = $mysqli->query($sql);
-      var_dump($result);exit();
       $staff = $result->fetch_assoc();
-     */
 
       // 查询项目数量
       $sql = "SELECT count(*) as count from projects WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
@@ -58,7 +56,7 @@
             <p>Company ID:<?php echo $adminInfo['SUBCOMPANY_ID']; ?></p>
             <p>location:<?php echo $adminInfo['LOCATION']; ?></p>
             <p>capital:<?php echo $adminInfo['BUDGET']; ?></p>
-            <!-- <p>number of employees:<?php echo $staff['count']; ?></p> -->
+            <p>number of employees:<?php echo $staff['count']; ?></p>
             <p>number of projects:<?php echo $projects['count']; ?></p>
     </div>
 

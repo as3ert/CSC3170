@@ -18,10 +18,12 @@
       $result = $mysqli->query($sql);
       $adminInfo = $result->fetch_assoc();
 
+      $sql = "SELECT * FROM subcompanies LEFT JOIN administrators ON subcompanies.SUBCOMPANY_ID = administrators.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
+      $result = $mysqli->query($sql);
+      $comInfo = $result->fetch_assoc();
+
       // 查询员工数量
-
-      $sql = "SELECT count(*) as count from subcompanies WHERE SUBCOMPANY_ID = {$adminInfo['SUBCOMPANY_ID']}";
-
+      $sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$comInfo['LOCATION']}'";
       // var_dump($sql);exit();
       $result = $mysqli->query($sql);
       $staff = $result->fetch_assoc();
