@@ -34,12 +34,11 @@
     $result = $mysqli->query($sql);
     $projects = $result->fetch_assoc();
 
-    $staffSql =  "SELECT * FROM subcompanies WHERE SUBCOMPANY_ID = {$adminInfo['SUBCOMPANY_ID']}";
+    $staffSql =  "SELECT * FROM employees WHERE LOCATION = '{$comInfo['LOCATION']}'";
     $staffrs= $mysqli->query($staffSql);
     $staffList = [];
     foreach($staffrs as $k => $item){
         array_push($staffList,$item);
-
     }
     // echo json_encode($staffList);exit();
     if(isset($_POST["submit"])){
@@ -51,8 +50,8 @@
           echo "<script>javascript:alert('Project_ID已经存在！');location.href='UI3.php';</script>";
           exit;
         }
-
-        // 判断Manager_ID是否存在
+        /*
+        // 判断Manager_ID是否存在于
         $sql = "select * from employees where EMPLOYEE_ID='{$_POST['Manager_ID']}'";
 
         $result = $mysqli->query($sql);
@@ -61,14 +60,15 @@
           echo "<script>javascript:alert('Manager_ID不存在！');location.href='UI3.php';</script>";
           exit;
         }
-        $ids = [$_POST['Front End'],$_POST['Back End'],$_POST['Testing']];
+        $ids = [$_POST['Front_End'],$_POST['Back_End'],$_POST['Testing']];
+        */
         // 查询员工的总工资
         $total = 0;
-        $sql1 = "select * from employees where EMPLOYEE_ID='{$_POST['Front End']}'";
+        $sql1 = "select * from employees where EMPLOYEE_ID='{$_POST['Front_End']}'";
         $result1 = $mysqli->query($sql1);
         $row1 = $result1->fetch_assoc();
 
-        $sql2 = "select * from employees where EMPLOYEE_ID='{$_POST['Back End']}'";
+        $sql2 = "select * from employees where EMPLOYEE_ID='{$_POST['Back_End']}'";
         $result2 = $mysqli->query($sql2);
         $row2 = $result2->fetch_assoc();
 
@@ -87,14 +87,14 @@
           exit;
         }
           // projects表新增一条记录
-          $sql = "insert into projects(PROJECT_ID,ADMINISTRATOR_ID,PROJECT_NAME,START_DATE,END_DATE,FRONT_END_NUMBER,BACK_END_NUMBER,TESTING_NUMBER) values ('{$_POST['Project_ID']}','{$adminInfo['ADMINISTRATOR_ID']}','{$_POST['Project_name']}','{$_POST['Start_date']}','{$_POST['End_date']}','{$row1['SALARY']}','{$row2['SALARY']}','{$row3['SALARY']}')";
+          $sql = "insert into projects(PROJECT_ID,ADMINISTRATOR_ID,PROJECT_NAME,START_DATE,END_DATE,FRONT_END_NUMBER,BACK_END_NUMBER,TESTING_NUMBER) values ('{$_POST['Project_ID']}','{$adminInfo['ADMINISTRATOR_ID']}','{$_POST['Project_name']}','{$_POST['Start_date']}','{$_POST['End_date']}','{$_POST['front_end_number']}','{$_POST['back_end_number']}','{$_POST['testing_number']}')";
           $res = $mysqli->query($sql);
 
           // jobs表新增三条记录
-          $sql1 = "insert into jobs(EMPLOYEE_ID,PROJECT_ID) values ('{$_POST['Front End']}','{$_POST['Project_ID']}')";
+          $sql1 = "insert into jobs(EMPLOYEE_ID,PROJECT_ID) values ('{$_POST['Front_End']}','{$_POST['Project_ID']}')";
           $res = $mysqli->query($sql1);
 
-          $sql2 = "insert into jobs(EMPLOYEE_ID,PROJECT_ID) values ('{$_POST['Back End']}','{$_POST['Project_ID']}')";
+          $sql2 = "insert into jobs(EMPLOYEE_ID,PROJECT_ID) values ('{$_POST['Back_End']}','{$_POST['Project_ID']}')";
           $res = $mysqli->query($sql2);
 
           $sql3 = "insert into jobs(EMPLOYEE_ID,PROJECT_ID) values ('{$_POST['Testing']}','{$_POST['Project_ID']}')";
@@ -144,7 +144,7 @@
             </tr>
             <tr>
               <td>Start_date:
-                <input type="date" name='Start_date' id='Start_date' required / >
+                <input type="date" name='Start_date' id='Start_date' required />
               </td>
             </tr>
             <tr>
@@ -153,8 +153,18 @@
               </td>
             </tr>
             <tr>
-              <td>Manager_ID:
-                <input type="text" name='Manager_ID' id='Manager_ID' required />
+              <td>front_end_number:
+                <input type="text" name='front_end_number' id='front_end_number' required />
+              </td>
+            </tr>
+            <tr>
+              <td>back_end_number:
+                <input type="text" name='back_end_number' id='back_end_number' required />
+              </td>
+            </tr>
+            <tr>
+              <td>testing_number:
+                <input type="text" name='testing_number' id='testing_number' required />
               </td>
             </tr>
             <tr>
@@ -167,13 +177,25 @@
                   <option value="4">4</option>
                 </select>
               </td> -->
-
+              <td>
+                Manager_ID:
+                <select name='Manager_ID' id='Manager_ID' required />
+                  <?php
+                        foreach($staffList as $staff){
+                          if ($staff['MANAGE_PROJECT_ID'] == NULL) {
+                            echo "<option value='{$staff['EMPLOYEE_ID']}'>{$staff['EMPLOYEE_NAME']}</option>";
+                          }
+                        }
+                    ?>
+                  </select>
+              </td>
+            </tr>
               <td>
                 Front_end_staff:
-                <select id="Front End" name="Front End" required />
+                <select id="Front_End" name="Front_End" required />
                    <?php
                       foreach($staffList as $staff){
-                        if ($staff['POSITION'] == 'Front End' && $staff['MANAGE_PROJECT_ID'] == NULL) {
+                        if ($staff['POSITION'] == 'Front End') {
                           echo "<option value='{$staff['EMPLOYEE_ID']}'>{$staff['EMPLOYEE_NAME']}</option>";
                         }
                       }
@@ -182,11 +204,12 @@
                 </td>
             </tr>
             <tr>
-              <td>Back_end_staff:
-                <select id="Back End" name="Back End" required />
+              <td>
+                Back_end_staff:
+                <select id="Back_End" name="Back_End" required />
                    <?php
                       foreach($staffList as $staff){
-                        if ($staff['POSITION'] == 'Back End' && $staff['MANAGE_PROJECT_ID'] == NULL) {
+                        if ($staff['POSITION'] == 'Back End') {
                           echo "<option value='{$staff['EMPLOYEE_ID']}'>{$staff['EMPLOYEE_NAME']}</option>";
                         }
                       }
@@ -199,7 +222,7 @@
                 <select id="Testing" name="Testing" required />
                    <?php
                       foreach($staffList as $staff){
-                        if ($staff['POSITION'] == 'Testing' && $staff['MANAGE_PROJECT_ID'] == NULL) {
+                        if ($staff['POSITION'] == 'Testing') {
                           echo "<option value='{$staff['EMPLOYEE_ID']}'>{$staff['EMPLOYEE_NAME']}</option>";
                         }
                       }
