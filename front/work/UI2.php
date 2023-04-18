@@ -17,6 +17,20 @@
       $sql = "SELECT * FROM administrators LEFT JOIN subcompanies ON administrators.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
       $result = $mysqli->query($sql);
       $adminInfo = $result->fetch_assoc();
+
+      // 查询员工数量
+
+      $sql = "SELECT count(*) as count from subcompanies WHERE SUBCOMPANY_ID = {$adminInfo['SUBCOMPANY_ID']}";
+
+      // var_dump($sql);exit();
+      $result = $mysqli->query($sql);
+      $staff = $result->fetch_assoc();
+
+
+      // 查询项目数量
+      $sql = "SELECT count(*) as count from projects WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
+      $result = $mysqli->query($sql);
+      $projects = $result->fetch_assoc();
     $act = !empty($_GET['act']) ? trim($_GET['act']) : '';
 
     if ($_SERVER['REQUEST_METHOD']==='POST') {
@@ -24,15 +38,18 @@
       if ($_GET['act'] == 'add') {
           $Worker_ID = $_POST['Worker_ID'];
           $name = $_POST['name'];
+          $age = $_POST['age'];
+          $gender = $_POST['gender'];
           $Position = $_POST['Position'];
           $Salary = $_POST['Salary'];
+          $date = $_POST['date'];
 
-          if (empty($Worker_ID) || empty($name) || empty($Position) || empty($Salary) ) {
+          if (empty($Worker_ID) || empty($name) || empty($Position) || empty($Salary) || empty($age) || empty($gender) || empty($date)) {
             echo "<script>javascript:alert('请填写完整员工信息!');location.href='UI2.php';</script>";
             exit;
           }
 
-          // 判断第一位是否是0
+          // 判断第一位是否是1
           if($Worker_ID[0] != 0){
             echo "<script>javascript:alert('员工ID填写有误!');location.href='UI2.php';</script>";
             exit;
@@ -49,7 +66,7 @@
 
 
           // employees表新增一条记录
-          $sql = "insert into employees(EMPLOYEE_ID,EMPLOYEE_NAME,SALARY,POSITION,PASSWORD) values ('{$Worker_ID}','{$name}','{$Position}','{$Salary}','123456')";
+          $sql = "insert into employees(EMPLOYEE_ID,EMPLOYEE_NAME,AGE,GENDER,POSITION,SALARY,PASSWORD,LOCATION, ENTRY_DATE) values ('{$Worker_ID}','{$name}','{$age}','{$gender}','{$Position}','{$Salary}','123456','{$adminInfo['LOCATION']}','{$date}')";
           $res = $mysqli->query($sql);
 
           // 
@@ -73,7 +90,7 @@
           $sql = "delete FROM jobs where (EMPLOYEE_ID='{$Worker_ID}')";
           $result = $mysqli->query($sql);
 
-          // 4、删除jobs表数据
+          // 4、删除managers表数据
           $sql = "delete FROM managers where (MANAGER_ID='{$Worker_ID}')";
           $result = $mysqli->query($sql);
           echo "<script>javascript:alert('删除成功!');location.href='UI2.php';</script>";
@@ -96,8 +113,8 @@
             <p>Company ID:<?php echo $adminInfo['SUBCOMPANY_ID']; ?></p>
             <p>location:<?php echo $adminInfo['LOCATION']; ?></p>
             <p>capital:<?php echo $adminInfo['BUDGET']; ?></p>
-            <p>number of employees:</p>
-            <p>number of projects:</p>
+            <p>number of employees:<?php echo $staff['count']; ?></p>
+            <p>number of projects:<?php echo $projects['count']; ?></p>
     </div>
 
     <!-- 主内容区 -->
@@ -124,6 +141,18 @@
       </tr>
       <tr>
         <td>
+          <label for="age" >Age:</label>
+          <input type="text" name='age' id='age'>
+          </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="gender" >Gender:</label>
+          <input type="text" name='gender' id='gender'>
+          </td>
+      </tr>
+      <tr>
+        <td>
             <label for="Position:" > Position : </label>
             <input type="text" name='Position' id='Position'>
           </td>
@@ -132,6 +161,12 @@
         <td>
             <label for="Salary" >Salary:</label>
             <input type="text" name='Salary' id='Salary'>
+          </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="date" >Entry_date:</label>
+          <input type="date" name='date' id='date' required / >
           </td>
       </tr>
         <tr> 
