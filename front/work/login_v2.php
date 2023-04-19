@@ -7,7 +7,7 @@
     // 判断第一位是0还是1，如果都不是报错
     $first = $name[0];
     if (!in_array($first, [0,1])) {
-    	echo "<script>javascript:alert('登录失败!');location.href='login.php';</script>";
+    	echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
     	exit;
     }
 
@@ -17,10 +17,10 @@
 	    $row = $result->fetch_assoc();
 	    if ($row) {
     	    setcookie('id',$name);
-    		echo "<script>javascript:alert('登录成功!');location.href='UI1.php';</script>";
+    		echo "<script>javascript:alert('Login successfully!!');location.href='UI1.php';</script>";
     		exit;
 	    }else{
-    		echo "<script>javascript:alert('登录失败!');location.href='login.php';</script>";
+    		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
     		exit;
 	    }
     }elseif ($first == 0) {
@@ -30,14 +30,14 @@
 	    if ($row) {
     	    setcookie('is_admin',0);
     	    setcookie('id',$name);
-    		echo "<script>javascript:alert('登录成功!');location.href='worker.php';</script>";
+    		echo "<script>javascript:alert('Login successfully!!');location.href='worker.php';</script>";
     		exit;
 	    }else{
-    		echo "<script>javascript:alert('登录失败!');location.href='login.php';</script>";
+    		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
     		exit;
 	    }
     }else {
-    	echo "<script>javascript:alert('登录失败!');location.href='login.php';</script>";
+    	echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
     }
 }
 
