@@ -22,12 +22,20 @@
     $result = $mysqli->query($sql);
     $comInfo = $result->fetch_assoc();
 
+    $sql = "SELECT * FROM projects LEFT JOIN administrators ON projects.ADMINISTRATOR_ID = administrators.ADMINISTRATOR_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
+    $result = $mysqli->query($sql);
+    $projInfo = $result->fetch_assoc();
+
     // 查询员工数量
     $sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$comInfo['LOCATION']}'";
     // var_dump($sql);exit();
     $result = $mysqli->query($sql);
     $staff = $result->fetch_assoc();
 
+    $sql = "SELECT * from managers WHERE PROJECT_ID = {$projInfo['PROJECT_ID']}";
+    // var_dump($projInfo);exit();
+    $result = $mysqli->query($sql);
+    $project = $result->fetch_assoc();
 
     // 查询项目数量
     $sql = "SELECT count(*) as count from projects WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
