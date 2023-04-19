@@ -8,7 +8,7 @@
     // 判断第一位是0还是1，如果都不是报错
     $first = $name[0];
     if (!in_array($first, [0,1])) {
-    	echo "<script>location.href='login.php';</script>";
+    	echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
     	exit;
     }
 
@@ -18,7 +18,7 @@
 	    $row = $result->fetch_assoc();
 	    if ($row) {
     	    setcookie('id',$name);
-    		echo "<script>location.href='UI1.php';</script>";
+    		echo "<script>javascript:alert('Login successfully!!');location.href='UI1.php';</script>";
     		exit;
 	    }else{
     		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
@@ -31,7 +31,7 @@
 	    if ($row) {
     	    setcookie('is_admin',0);
     	    setcookie('id',$name);
-    		echo "<script>location.href='worker.php';</script>";
+    		echo "<script>javascript:alert('Login successfully!!');location.href='worker.php';</script>";
     		exit;
 	    } else {
     		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
@@ -55,11 +55,22 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+html, body, h1, h2, h3, h4, h5, h6 {font-family: "Open Sans", sans-serif}
 </style>
 </head>
 
 <body class="w3-theme-l5">
+
+	<!-- Navbar -->
+	<div class="w3-top">
+    	<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+    	<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+    	<a href="login.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-briefcase w3-margin-right"></i>Company</a>
+    	<a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+      	</a>
+  		</div>
+  	</div>
+
 	<div class="w3-container w3-content login" style="max-width:1400px;margin-top:0px">
 		<form class="login-form" method="post" action="login.php" enctype="multipart/form-data">
 		<table align="center" width=300 height=10>
@@ -67,7 +78,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 				<br>
 				<div class="login_box">
 					<input type="name" name="name" id="name" required="required">
-					<label for="name" >User ID</td>
+					<label for="name">User ID</td>
 				</div>
 				<div class="login_box">
 					<input type="password" name='password' id='password' required="required">

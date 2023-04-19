@@ -14,7 +14,7 @@ body {
 	/*让页面始终占浏览器可视区域总高度*/
 	height: 100vh;
 	/*背景渐变色*/
-	background: linear-gradient(#f5f7f8,#f5f7f8);
+	background: linear-gradient(#f5f7f8, #4d636f);
 
 }
 

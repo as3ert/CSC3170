@@ -2,15 +2,15 @@ body {
     margin: 0;
     padding: 0;
     background: #d1d2d6;
-  }
+}
 
-  .main {
+.main {
     margin-left: 300px;
     padding: 20px;
-  }
+}
 
-  .main table {
+.main table {
     position:relative;
     top: 20px;
     left: 70px;
-  }
+}
