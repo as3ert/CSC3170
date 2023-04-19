@@ -52,13 +52,13 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           $date = $_POST['date'];
 
           if (empty($Worker_ID) || empty($name) || empty($Position) || empty($Salary) || empty($age) || empty($gender) || empty($date)) {
-            echo "<script>location.href='UI2.php';</script>";
+            echo "<script>location.href='adm_2.php';</script>";
             exit;
           }
 
           // 判断第一位是否是1
           if($Worker_ID[0] != 0){
-            echo "<script>location.href='UI2.php';</script>";
+            echo "<script>location.href='adm_2.php';</script>";
             exit;
           }
 
@@ -67,7 +67,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           $result = $mysqli->query($sql);
           $row = $result->fetch_assoc();
           if($row){
-            echo "<script>location.href='UI2.php';</script>";
+            echo "<script>location.href='adm_2.php';</script>";
             exit;
           }
 
@@ -75,7 +75,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           // employees表新增一条记录
           $sql = "insert into employees(EMPLOYEE_ID,EMPLOYEE_NAME,AGE,GENDER,POSITION,SALARY,PASSWORD,LOCATION, ENTRY_DATE) values ('{$Worker_ID}','{$name}','{$age}','{$gender}','{$Position}','{$Salary}','123456','{$adminInfo['LOCATION']}','{$date}')";
           $res = $mysqli->query($sql);
-            echo "<scriptlocation.href='UI2.php';</script>";
+            echo "<scriptlocation.href='adm_2.php';</script>";
             exit;
       }else{
         $Worker_ID = $_POST['Worker_ID1'];
@@ -84,7 +84,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           $result = $mysqli->query($sql);
           $row = $result->fetch_assoc();
           if(!$row){
-            echo "<script>location.href='UI2.php';</script>";
+            echo "<script>location.href='adm_2.php';</script>";
             exit;
           }
           // 2、删除employees表数据
@@ -98,7 +98,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           // 4、删除managers表数据
           $sql = "delete FROM managers where (MANAGER_ID='{$Worker_ID}')";
           $result = $mysqli->query($sql);
-          echo "<script>location.href='UI2.php';</script>";
+          echo "<script>location.href='adm_2.php';</script>";
             exit;
       }
     }
@@ -199,11 +199,11 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
       <script>
       function act1(){
         console.log(11111)
-         document.frm.action="UI2.php?act=add";
+         document.frm.action="adm_2.php?act=add";
          document.frm.submit();   
       }
       function act2(){
-         document.frm.action="UI2.php?act=delete";
+         document.frm.action="adm_2.php?act=delete";
          document.frm.submit();   
       }
       </script>
