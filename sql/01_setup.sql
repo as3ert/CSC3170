@@ -34,7 +34,7 @@ CREATE TABLE projects
     FRONT_END_NUMBER DECIMAL(2, 0) NOT NULL,
     BACK_END_NUMBER DECIMAL(2, 0) NOT NULL,
     TESTING_NUMBER DECIMAL(2, 0) NOT NULL,
-    BUDGET VARCHAR(20) NOT NULL,
+    BUDGET VARCHAR(20) NOT NULL
 );
 
 -- -----------------------------------------------------
