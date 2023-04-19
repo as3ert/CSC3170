@@ -10,7 +10,6 @@
     require './config.php';
      $id = $_COOKIE['id'];
      if (empty($id)) {
-       // 未登录，跳转
         echo "<script>location.href='login.php';</script>";
         exit;
      }
@@ -22,22 +21,13 @@
     $result = $mysqli->query($sql);
     $comInfo = $result->fetch_assoc();
 
-    $sql = "SELECT * FROM projects LEFT JOIN administrators ON projects.ADMINISTRATOR_ID = administrators.ADMINISTRATOR_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
-    $result = $mysqli->query($sql);
-    $projInfo = $result->fetch_assoc();
-
-    // 查询员工数量
+    // check the number of workers
     $sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$comInfo['LOCATION']}'";
     // var_dump($sql);exit();
     $result = $mysqli->query($sql);
     $staff = $result->fetch_assoc();
 
-    $sql = "SELECT * from managers WHERE PROJECT_ID = {$projInfo['PROJECT_ID']}";
-    // var_dump($projInfo);exit();
-    $result = $mysqli->query($sql);
-    $project = $result->fetch_assoc();
-
-    // 查询项目数量
+    // check the number of projects
     $sql = "SELECT count(*) as count from projects WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
     $result = $mysqli->query($sql);
     $projects = $result->fetch_assoc();
@@ -50,7 +40,7 @@
     }
     // echo json_encode($staffList);exit();
     if(isset($_POST["submit"])){
-        // 查询Project_ID是否存在
+        // whether project_ID has already existed
         $sql = "select * from projects where (PROJECT_ID='{$_POST['Project_ID']}')";
         $result = $mysqli->query($sql);
         $row = $result->fetch_assoc();
@@ -58,60 +48,110 @@
           echo "<script>javascript:alert('Project_ID has already been existed！');location.href='UI3.php';</script>";
           exit;
         }
-        /*
-        // 判断Manager_ID是否存在于
-        $sql = "select * from employees where EMPLOYEE_ID='{$_POST['Manager_ID']}'";
-
-        $result = $mysqli->query($sql);
-        $row = $result->fetch_assoc();
-        if(!$row){
-          echo "<script>javascript:alert('Manager_ID不存在！');location.href='UI3.php';</script>";
-          exit;
-        }
-        $ids = [$_POST['Front_End'],$_POST['Back_End'],$_POST['Testing']];
-        */
-        // 查询员工的总工资
-        $total = 0;
-        $sql1 = "select * from employees where EMPLOYEE_ID='{$_POST['Front_End']}'";
-        $result1 = $mysqli->query($sql1);
-        $row1 = $result1->fetch_assoc();
-
-        $sql2 = "select * from employees where EMPLOYEE_ID='{$_POST['Back_End']}'";
-        $result2 = $mysqli->query($sql2);
-        $row2 = $result2->fetch_assoc();
-
-        $sql3 = "select * from employees where EMPLOYEE_ID='{$_POST['Testing']}'";
-        $result3 = $mysqli->query($sql3);
-        $row3 = $result3->fetch_assoc();
-        $total = $row1['SALARY'] + $row2['SALARY'] + $row3['SALARY'];
         
-        // 查询预算
-        $sql = "select * from subcompanies where SUBCOMPANY_ID ='{$adminInfo['SUBCOMPANY_ID']}'";
-        $result = $mysqli->query($sql);
-        $row = $result->fetch_assoc();
-        // 和预算做比较
-        if ($total > $row['BUDGET']) {
-          echo "<script>javascript:alert('not enough money!');location.href='UI3.php';</script>";
+        // mark the manager in 'employees'
+        $sql = " UPDATE employees SET MANAGE_PROJECT_ID = '{$_POST['Project_ID']}' WHERE EMPLOYEE_ID = '{$_POST['Manager_ID']}'";
+        $res = $mysqli->query($sql);
+
+        // check employees' total salary
+        $frontIds = [];
+        $backIds = [];
+        $testIds = [];
+
+        foreach ($_POST as $key => $value) {
+          if (strstr($key, '^')) {
+            $arr = explode('^', $key);
+            if ($arr[0] == 'Front End') {
+              $frontIds[] = $arr[1];
+            }elseif ($arr[0] == 'Back End') {
+              $backIds[] = $arr[1];
+            }else{
+              $testIds[] = $arr[1];
+            }
+          }
+        }
+
+        $frontCount = count($frontIds);
+        $backCount = count($backIds);
+        $testCount = count($testIds);
+
+        if (empty($frontIds) && empty($backIds) && empty($testIds)) {
+          echo "<script>javascript:alert('Please at least chose one employee！');location.href='UI3.php';</script>";
           exit;
         }
-          // projects表新增一条记录
+
+        $total = 0;
+
+        if (!empty($frontIds)) {
+          foreach($frontIds as $id){
+            $sql1 = "select * from employees where EMPLOYEE_ID='{$id}'";
+            $result1 = $mysqli->query($sql1);
+            $row1 = $result1->fetch_assoc();
+            $total += $row1['SALARY'];
+          }
+        }
+
+        if (!empty($backIds)) {
+          foreach($backIds as $id){
+            $sql1 = "select * from employees where EMPLOYEE_ID='{$id}'";
+            $result1 = $mysqli->query($sql1);
+            $row1 = $result1->fetch_assoc();
+            $total += $row1['SALARY'];
+          }
+        }
+
+        if (!empty($testIds)) {
+          foreach($testIds as $id){
+            $sql1 = "select * from employees where EMPLOYEE_ID='{$id}'";
+            $result1 = $mysqli->query($sql1);
+            $row1 = $result1->fetch_assoc();
+            $total += $row1['SALARY'];
+          }
+        }
+        
+        // check the budget
+        $sql = "select * from subcompanies where SUBCOMPANY_ID ='{$adminInfo['SUBCOMPANY_ID']}'";
+        // var_dump($sql);exit();
+        $result = $mysqli->query($sql);
+        $row = $result->fetch_assoc();
+        // compare with budget
+        if ($total > $row['BUDGET']) {
+          echo "<script>javascript:alert('over budget！');location.href='UI3.php';</script>";
+          exit;
+        }
+        else {
+          // change the company's budget
+          $budget_update = $row['BUDGET'] - $total;
+          $sql = " UPDATE subcompanies SET BUDGET = '{$budget_update}' WHERE SUBCOMPANY_ID = '{$adminInfo['SUBCOMPANY_ID']}'";
+          $res = $mysqli->query($sql);
+        }
+          // projects add a new record
           $sql = "insert into projects(PROJECT_ID,ADMINISTRATOR_ID,PROJECT_NAME,START_DATE,END_DATE,FRONT_END_NUMBER,BACK_END_NUMBER,TESTING_NUMBER) values ('{$_POST['Project_ID']}','{$adminInfo['ADMINISTRATOR_ID']}','{$_POST['Project_name']}','{$_POST['Start_date']}','{$_POST['End_date']}','{$_POST['front_end_number']}','{$_POST['back_end_number']}','{$_POST['testing_number']}')";
           $res = $mysqli->query($sql);
 
-          // jobs表新增三条记录
-          $sql1 = "insert into jobs(EMPLOYEE_ID,PROJECT_ID) values ('{$_POST['Front_End']}','{$_POST['Project_ID']}')";
-          $res = $mysqli->query($sql1);
-
-          $sql2 = "insert into jobs(EMPLOYEE_ID,PROJECT_ID) values ('{$_POST['Back_End']}','{$_POST['Project_ID']}')";
-          $res = $mysqli->query($sql2);
-
-          $sql3 = "insert into jobs(EMPLOYEE_ID,PROJECT_ID) values ('{$_POST['Testing']}','{$_POST['Project_ID']}')";
-          $res = $mysqli->query($sql3);
-          // managers表新增一条记录
-
+          // jobs add new records
+          if (!empty($frontIds)) {
+            foreach($frontIds as $id){
+              $sql1 = "insert into jobs(EMPLOYEE_ID,PROJECT_ID) values ('{$id}','{$_POST['Project_ID']}')";
+              $res = $mysqli->query($sql1);
+            }
+          }
+          if (!empty($backIds)) {
+            foreach($backIds as $id){
+              $sql1 = "insert into jobs(EMPLOYEE_ID,PROJECT_ID) values ('{$id}','{$_POST['Project_ID']}')";
+              $res = $mysqli->query($sql1);
+            }
+          } 
+          if (!empty($testIds)) {
+            foreach($testIds as $id){
+              $sql1 = "insert into jobs(EMPLOYEE_ID,PROJECT_ID) values ('{$id}','{$_POST['Project_ID']}')";
+              $res = $mysqli->query($sql1);
+            }
+          }
+          // managers add a new record
           $sql = "insert into managers(MANAGER_ID,PROJECT_ID) values ('{$_POST['Manager_ID']}','{$_POST['Project_ID']}')";
           $res = $mysqli->query($sql);
-            echo "<script>javascript:alert('add success!');location.href='UI3.php';</script>";
+            echo "<script>javascript:alert('Add success!');location.href='UI3.php';</script>";
             exit;
     }
     
@@ -134,7 +174,6 @@
             <p>number of projects:<?php echo $projects['count']; ?></p>
     </div>
 
-    <!-- 主内容区 -->
     <div class="main">
        <table style="width: 100%;height:100%;" >
          <form method="post" action="UI3.php"  enctype="multipart/form-data">
@@ -200,41 +239,41 @@
             </tr>
               <td>
                 Front_end_staff:
-                <select id="Front_End" name="Front_End" required/>
-                   <?php
+                  <?php
                       foreach($staffList as $staff){
                         if ($staff['POSITION'] == 'Front End') {
-                          echo "<option value='{$staff['EMPLOYEE_ID']}'>{$staff['EMPLOYEE_NAME']}</option>";
+                          echo "<input type='checkbox' name='Front End^{$staff['EMPLOYEE_ID']}' value='{$staff['EMPLOYEE_ID']}'>";
+                          echo "<label>{$staff['EMPLOYEE_NAME']}</label>";
                         }
                       }
-                   ?>
+                    ?>
                   </select>
                 </td>
             </tr>
             <tr>
               <td>
                 Back_end_staff:
-                <select id="Back_End" name="Back_End" required/>
-                   <?php
+                  <?php
                       foreach($staffList as $staff){
                         if ($staff['POSITION'] == 'Back End') {
-                          echo "<option value='{$staff['EMPLOYEE_ID']}'>{$staff['EMPLOYEE_NAME']}</option>";
+                          echo "<input type='checkbox' name='Back End^{$staff['EMPLOYEE_ID']}' value='{$staff['EMPLOYEE_ID']}'>";
+                          echo "<label>{$staff['EMPLOYEE_NAME']}</label>";
                         }
                       }
-                   ?>
+                    ?>
                 </select>
               </td>
             </tr>
             <tr>
               <td>Testing_staff:
-                <select id="Testing" name="Testing" required/>
-                   <?php
+                <?php
                       foreach($staffList as $staff){
                         if ($staff['POSITION'] == 'Testing') {
-                          echo "<option value='{$staff['EMPLOYEE_ID']}'>{$staff['EMPLOYEE_NAME']}</option>";
+                          echo "<input type='checkbox' name='Testing^{$staff['EMPLOYEE_ID']}' value='{$staff['EMPLOYEE_ID']}'>";
+                          echo "<label>{$staff['EMPLOYEE_NAME']}</label>";
                         }
                       }
-                   ?>
+                    ?>
                 </select>
               </td>
             </tr>
