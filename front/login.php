@@ -5,13 +5,14 @@
     $name = $_POST['name'];
     $password = $_POST['password'];
 
-    // 判断第一位是0还是1，如果都不是报错
+	// Check whether the first digit is 0 or 1, if not, report an error
     $first = $name[0];
     if (!in_array($first, [0,1])) {
     	echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
     	exit;
     }
 
+	// If the first digit is 1, query the administrator table, if the query result is not empty, set the cookie and jump to the administrator page, otherwise report an error
     if ($first == 1) {
 	    $sql = "select * from administrators where (ADMINISTRATOR_ID='$name') and (PASSWORD ='$password')";
 	    $result = $mysqli->query($sql);
@@ -24,6 +25,7 @@
     		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
     		exit;
 	    }
+	// If the first digit is 0, query the employee table, if the query result is not empty, set the cookie and jump to the employee page, otherwise report an error
     } elseif ($first == 0) {
 	    $sql = "select * from employees where (EMPLOYEE_ID='$name') and (PASSWORD ='$password')";
 	    $result = $mysqli->query($sql);
@@ -37,6 +39,7 @@
     		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
     		exit;
 	    }
+	// If the first digit is not 0 or 1, report an error
     } else {
     	echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
     }
@@ -71,19 +74,23 @@ html, body, h1, h2, h3, h4, h5, h6 {font-family: "Open Sans", sans-serif}
   		</div>
   	</div>
 
+	<!-- Page Container -->
 	<div class="w3-container w3-content login" style="max-width:1400px;margin-top:0px">
 		<form class="login-form" method="post" action="login.php" enctype="multipart/form-data">
 		<table align="center" width=300 height=10>
 				<br>
 				<br>
+				<!-- Login User ID -->
 				<div class="login_box">
 					<input type="name" name="name" id="name" required="required">
 					<label for="name">User ID</td>
 				</div>
+				<!-- Login Password -->
 				<div class="login_box">
 					<input type="password" name='password' id='password' required="required">
 					<label for="password">Password</td>
 				</div>
+				<!-- Login Bottom -->
 				<div><a style="padding-left: 40%;" ></a>
 					<button type="submit" name='submit' value='Login'  class="btn"><b> Login </b></button>
 				</div>

@@ -17,7 +17,7 @@
 require './config.php';
 $id = $_COOKIE['id'];
 if (empty($id)) {
-  	// 未登录，跳转
+	// If the cookie is empty, redirect to the login page
     echo "<script>location.href='login.php';</script>";
   	exit;
 }
@@ -25,15 +25,13 @@ $sql = "SELECT * FROM employees where EMPLOYEE_ID = {$id}";
 $result = $mysqli->query($sql);
 $adminInfo = $result->fetch_assoc();
 
-// 查询该员工参加的所有项目
+// Get the project list
 $sql =  "SELECT * FROM jobs LEFT JOIN projects on jobs.PROJECT_ID = projects.PROJECT_ID LEFT JOIN managers on projects.PROJECT_ID = managers.PROJECT_ID WHERE EMPLOYEE_ID = {$id}";
 $rs= $mysqli->query($sql);
 $projectList = [];
 foreach($rs as $k => $item) {
   	array_push($projectList,$item);
 }
-
-// echo json_encode($projectList);exit;
 
 ?>
 	<body class="w3-theme-l5">
