@@ -2,7 +2,7 @@
 $host = 'localhost';
 $database = 'proj';
 $username = 'root';
-$password = '120090086';
+$password = '4223';
 $mysqli = new mysqli($host, $username, $password, $database);
 if (mysqli_connect_errno()) {
     // 诊断连接错误
