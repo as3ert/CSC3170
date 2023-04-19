@@ -122,11 +122,12 @@
         else {
           // change the company's budget
           $budget_update = $row['BUDGET'] - $total;
+          // var_dump($sql);exit();
           $sql = " UPDATE subcompanies SET BUDGET = '{$budget_update}' WHERE SUBCOMPANY_ID = '{$adminInfo['SUBCOMPANY_ID']}'";
           $res = $mysqli->query($sql);
         }
           // projects add a new record
-          $sql = "insert into projects(PROJECT_ID,ADMINISTRATOR_ID,PROJECT_NAME,START_DATE,END_DATE,FRONT_END_NUMBER,BACK_END_NUMBER,TESTING_NUMBER) values ('{$_POST['Project_ID']}','{$adminInfo['ADMINISTRATOR_ID']}','{$_POST['Project_name']}','{$_POST['Start_date']}','{$_POST['End_date']}','{$_POST['front_end_number']}','{$_POST['back_end_number']}','{$_POST['testing_number']}')";
+          $sql = "insert into projects(PROJECT_ID,ADMINISTRATOR_ID,PROJECT_NAME,START_DATE,END_DATE,FRONT_END_NUMBER,BACK_END_NUMBER,TESTING_NUMBER,BUDGET) values ('{$_POST['Project_ID']}','{$adminInfo['ADMINISTRATOR_ID']}','{$_POST['Project_name']}','{$_POST['Start_date']}','{$_POST['End_date']}','{$_POST['front_end_number']}','{$_POST['back_end_number']}','{$_POST['testing_number']}','{$total}')";
           $res = $mysqli->query($sql);
 
           // jobs add new records
