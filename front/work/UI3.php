@@ -11,7 +11,7 @@
      $id = $_COOKIE['id'];
      if (empty($id)) {
        // 未登录，跳转
-        echo "<script>javascript:alert('未登录!');location.href='login.php';</script>";
+        echo "<script>location.href='login.php';</script>";
         exit;
      }
     $sql = "SELECT * FROM administrators LEFT JOIN subcompanies ON administrators.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
@@ -47,7 +47,7 @@
         $result = $mysqli->query($sql);
         $row = $result->fetch_assoc();
         if($row){
-          echo "<script>javascript:alert('Project_ID已经存在！');location.href='UI3.php';</script>";
+          echo "<script>javascript:alert('Project_ID has already been existed！');location.href='UI3.php';</script>";
           exit;
         }
         /*
@@ -83,7 +83,7 @@
         $row = $result->fetch_assoc();
         // 和预算做比较
         if ($total > $row['BUDGET']) {
-          echo "<script>javascript:alert('预算超标！');location.href='UI3.php';</script>";
+          echo "<script>javascript:alert('not enough money!');location.href='UI3.php';</script>";
           exit;
         }
           // projects表新增一条记录
@@ -103,7 +103,7 @@
 
           $sql = "insert into managers(MANAGER_ID,PROJECT_ID) values ('{$_POST['Manager_ID']}','{$_POST['Project_ID']}')";
           $res = $mysqli->query($sql);
-            echo "<script>javascript:alert('添加成功!');location.href='UI3.php';</script>";
+            echo "<script>javascript:alert('add success!');location.href='UI3.php';</script>";
             exit;
     }
     
@@ -112,13 +112,13 @@
   <body>
     <!-- 左边框 -->
     <div class="sidebar">
-        <h2>菜单</h2>
+        <h2>menu</h2>
             <ul>
-                <li><a href="UI1.php" href="#basic-info" id="info-link">基本信息</a></li>
-                <li><a href="UI2.php" href="#employee-appointments" id="employee-link">员工任用</a></li>
-                <li><a href="UI3.php" href="#project-establishment" id="prj-link">项目设立</a></li>
+            <li><a href="UI1.php" href="#basic-info" id="info-link">Basic Information</a></li>
+                <li><a href="UI2.php" href="#employee-appointments" id="employee-link">Staff Arrangement</a></li>
+                <li><a href="UI3.php" href="#project-establishment" id="prj-link">Creat Project</a></li>
             </ul>
-            <h3>公司信息</h3>
+            <h3>company information</h3>
             <p>Company ID:<?php echo $adminInfo['SUBCOMPANY_ID']; ?></p>
             <p>location:<?php echo $adminInfo['LOCATION']; ?></p>
             <p>capital:<?php echo $adminInfo['BUDGET']; ?></p>
@@ -130,7 +130,7 @@
     <div class="main">
        <table style="width: 100%;height:100%;" >
          <form method="post" action="UI3.php"  enctype="multipart/form-data">
-            <h2>项目设立</h2>
+            <h2>Creat Project</h2>
             <h3>Add Project:</h3>
             <tr>
               <td>Project_ID:
@@ -179,7 +179,7 @@
               </td> -->
               <td>
                 Manager_ID:
-                <select name='Manager_ID' id='Manager_ID' required />
+                <select name='Manager_ID' id='Manager_ID' required/>
                   <?php
                         foreach($staffList as $staff){
                           if ($staff['MANAGE_PROJECT_ID'] == NULL) {
@@ -192,7 +192,7 @@
             </tr>
               <td>
                 Front_end_staff:
-                <select id="Front_End" name="Front_End" required />
+                <select id="Front_End" name="Front_End" required/>
                    <?php
                       foreach($staffList as $staff){
                         if ($staff['POSITION'] == 'Front End') {
@@ -206,7 +206,7 @@
             <tr>
               <td>
                 Back_end_staff:
-                <select id="Back_End" name="Back_End" required />
+                <select id="Back_End" name="Back_End" required/>
                    <?php
                       foreach($staffList as $staff){
                         if ($staff['POSITION'] == 'Back End') {
@@ -219,7 +219,7 @@
             </tr>
             <tr>
               <td>Testing_staff:
-                <select id="Testing" name="Testing" required />
+                <select id="Testing" name="Testing" required/>
                    <?php
                       foreach($staffList as $staff){
                         if ($staff['POSITION'] == 'Testing') {

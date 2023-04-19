@@ -11,7 +11,7 @@
      $id = $_COOKIE['id'];
      if (empty($id)) {
        // 未登录，跳转
-        echo "<script>javascript:alert('未登录!');location.href='login.php';</script>";
+        echo "<script>location.href='login.php';</script>";
         exit;
      }
       $sql = "SELECT * FROM administrators LEFT JOIN subcompanies ON administrators.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
@@ -24,7 +24,6 @@
 
       // 查询员工数量
       $sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$comInfo['LOCATION']}'";
-      // var_dump($sql);exit();
       $result = $mysqli->query($sql);
       $staff = $result->fetch_assoc();
 
@@ -47,13 +46,13 @@
           $date = $_POST['date'];
 
           if (empty($Worker_ID) || empty($name) || empty($Position) || empty($Salary) || empty($age) || empty($gender) || empty($date)) {
-            echo "<script>javascript:alert('请填写完整员工信息!');location.href='UI2.php';</script>";
+            echo "<script>location.href='UI2.php';</script>";
             exit;
           }
 
           // 判断第一位是否是1
           if($Worker_ID[0] != 0){
-            echo "<script>javascript:alert('员工ID填写有误!');location.href='UI2.php';</script>";
+            echo "<script>location.href='UI2.php';</script>";
             exit;
           }
 
@@ -62,7 +61,7 @@
           $result = $mysqli->query($sql);
           $row = $result->fetch_assoc();
           if($row){
-            echo "<script>javascript:alert('员工ID已经存在！');location.href='UI2.php';</script>";
+            echo "<script>location.href='UI2.php';</script>";
             exit;
           }
 
@@ -72,7 +71,7 @@
           $res = $mysqli->query($sql);
 
           // 
-            echo "<script>javascript:alert('添加成功!');location.href='UI2.php';</script>";
+            echo "<scriptlocation.href='UI2.php';</script>";
             exit;
       }else{
         $Worker_ID = $_POST['Worker_ID1'];
@@ -81,7 +80,7 @@
           $result = $mysqli->query($sql);
           $row = $result->fetch_assoc();
           if(!$row){
-            echo "<script>javascript:alert('员工ID不存在!');location.href='UI2.php';</script>";
+            echo "<script>location.href='UI2.php';</script>";
             exit;
           }
           // 2、删除employees表数据
@@ -95,7 +94,7 @@
           // 4、删除managers表数据
           $sql = "delete FROM managers where (MANAGER_ID='{$Worker_ID}')";
           $result = $mysqli->query($sql);
-          echo "<script>javascript:alert('删除成功!');location.href='UI2.php';</script>";
+          echo "<script>location.href='UI2.php';</script>";
             exit;
       }
 
@@ -105,13 +104,13 @@
   <body>
     <!-- 左边框 -->
     <div class="sidebar">
-        <h2>菜单</h2>
+        <h2>menu</h2>
             <ul>
-                <li><a href="UI1.php" href="#basic-info" id="info-link">基本信息</a></li>
-                <li><a href="UI2.php" href="#employee-appointments" id="employee-link">员工任用</a></li>
-                <li><a href="UI3.php" href="#project-establishment" id="prj-link">项目设立</a></li>
+                <li><a href="UI1.php" href="#basic-info" id="info-link">Basic Information</a></li>
+                <li><a href="UI2.php" href="#employee-appointments" id="employee-link">Staff Arrangement</a></li>
+                <li><a href="UI3.php" href="#project-establishment" id="prj-link">Creat Project</a></li>
             </ul>
-            <h3>公司信息</h3>
+            <h3>company information</h3>
             <p>Company ID:<?php echo $adminInfo['SUBCOMPANY_ID']; ?></p>
             <p>location:<?php echo $adminInfo['LOCATION']; ?></p>
             <p>capital:<?php echo $adminInfo['BUDGET']; ?></p>
@@ -125,7 +124,7 @@
       <table>
       <tr> 
         <td>
-          <h2>员工任用</h2>
+          <h2>Staff Arrangement</h2>
           <h3>Add Staff:</h3>
           </td>
       </tr>
@@ -168,7 +167,7 @@
       <tr>
         <td>
           <label for="date" >Entry_date:</label>
-          <input type="date" name='date' id='date' required / >
+          <input type="date" name='date' id='date' required />
           </td>
       </tr>
         <tr> 
@@ -184,9 +183,6 @@
       </tr>
       <tr>
           <td>
-<!--             <button  type="submit">Add Staff</button>
-             <button type="submit">Delete</button> -->
-
             <input type="button" name="" value="Add Staff"  onclick="act1()"  />
             <input type="button" name="" value="Delete"  onclick="act2()"  />
           </td>
@@ -211,57 +207,6 @@
       }
     </script>
 
-<!--       <script>
-        let infoLink = document.getElementById("info-link");
-        let employeeLink = document.getElementById("employee-link");
-        let prjLink = document.getElementById("prj-link");
-        var sidebarLinks = document.querySelectorAll(".sidebar li");
-        sidebarLinks.forEach(function(link) {
-        link.addEventListener("click", function(event) {
-        event.preventDefault();
-
-    // 移除之前的阴影效果
-        sidebarLinks.forEach(function(l) {
-        l.classList.remove("active");
-        });
-
-    // 添加阴影效果
-        this.classList.add("active");
-        });
-        });
-
-
-
-        employeeLink.addEventListener("click", function(event) {
-        event.preventDefault();
-        let employeeSection = document.getElementById("employee-appointment");
-        let mainSections = document.querySelectorAll(".main section");
-        for (let i = 0; i < mainSections.length; i++) {
-        mainSections[i].style.display = "none";
-        }
-        employeeSection.style.display = "block";
-        })
-
-        infoLink.addEventListener("click", function(event) {
-        event.preventDefault();
-        let infoSection = document.getElementById("basic-info");
-        let mainSections = document.querySelectorAll(".main section");
-        for (let i = 0; i < mainSections.length; i++) {
-        mainSections[i].style.display = "none";
-        }
-        infoSection.style.display = "block";
-        })
-
-        prjLink.addEventListener("click", function(event) {
-        event.preventDefault();
-        let prjSection = document.getElementById("project-establishment");
-        let mainSections = document.querySelectorAll(".main section");
-        for (let i = 0; i < mainSections.length; i++) {
-        mainSections[i].style.display = "none";
-        }
-        prjSection.style.display = "block";
-        });
-    </script> -->
 
   </body>
 </html>

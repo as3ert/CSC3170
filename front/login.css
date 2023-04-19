@@ -14,9 +14,10 @@ body {
 	/*让页面始终占浏览器可视区域总高度*/
 	height: 100vh;
 	/*背景渐变色*/
-	background: linear-gradient(#c2d0e9,#96a0ac);
+	background: linear-gradient(#f5f7f8,#f5f7f8);
 
 }
+
 .login{
 	/*弹性布局 让子元素称为弹性项目*/
 	display: flex;
@@ -28,20 +29,24 @@ body {
 	align-items: center;
 	width: 400px;
 	padding: 40px;
-	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	border-color: transparent;
+	background-color: #ffffff;
 	box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
 
 }
 
 .login h2{
-	color: #fff;
+	color: #666666;
 	margin-bottom: 30px;
 }
+
 .login .login_box {
 	/*相对定位*/
 	position: relative;
 	width: 100%;
 }
+
 .login .login_box input{
 	/*清除input框自带的边框和轮廓*/
 	outline: none;
@@ -49,26 +54,26 @@ body {
 	width: 100%;
 	padding: 10px 0;
 	margin-bottom: 30px;
-	color: #fff;
+	color: #666666;
 	font-size: 16px;
-	border-bottom: 1px solid #fff;
+	border-bottom: 1px solid #666666;
 	/*背景颜色为透明色*/
 	background-color: transparent;
 }
 
 .login .login_box label{
 	position:absolute;
-	top: 0 ;
+	top: 0;
 	left: 0;
 	padding: 10px 0;
-	color: #fff;
+	color: #666666;
 	/*这个属性的默认值是auto 默认是这个元素可以被点击
 	但是如果我们写了none  就是这个元素不能被点击，就好像它可见但是不能用  
 	可望而不可及*/
 	/*这个就是两者的区别*/
 	pointer-events: none;
 	/*加个过度*/
-	transition: all 0.5s;
+	transition: all 0.3s;
 }
 /*: focus 选择器是当input获得焦点是触发的样式 + 是相邻兄弟选择器
 	去找与input相邻的兄弟label*/
@@ -82,27 +87,27 @@ body {
 .login .login_box input:focus + label,
 .login  .login_box input:valid + label{
 	top: -20px;
-	color: #03e9f4;
+	color: #4d636f;
 	font-size: 12px;
 }
 
 .login button{
 	/* overflow: hidden; */
 	position: relative;
-	padding: 15px 15px;
-	padding-left: 20px;
-	padding-right: 20px;
-	color: #03e9f4;
+	padding: 5px 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: #4d636f;
 	text-decoration: none;
 	/*同样加个过渡*/
 	transition: all 0.5s;
 	border-radius: 5px;
 	border-color: transparent;
-	font-weight: 500;
+	font-weight: 400;
 }
 .login button:hover {
-	color: #fff;
-	border-radius: 8px;
-	background-color: #03e9f4;
-	box-shadow: 0 0 5px #03e9f4,0 0 25px #03e9f4,0 0 50px #03e9f4,0 0 100px #03e9f4;
+	color: #f5f7f8;
+	border-radius: 1px;
+	background-color: #4d636f;
+	box-shadow: 0 0 5px #4d636f,0 0 10px #4d636f,0 0 15px #4d636f,0 0 20px #4d636f;
 }

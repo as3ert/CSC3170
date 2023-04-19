@@ -3,7 +3,7 @@ USE proj;
 -- -----------------------------------------------------
 
 INSERT INTO `employees` (`EMPLOYEE_ID`, `EMPLOYEE_NAME`, `AGE`, `ENTRY_DATE`,
-                         `GENDER`, `SALARY`, `POSITION`, `LOCATION`, 'PASSWORD') VALUES
+                         `GENDER`, `SALARY`, `POSITION`, `LOCATION`, `PASSWORD`) VALUES
 ('000001', 'John', '24', '2021-08-14', 'Male', '11000', 'Front End', 'Shenzhen', '123456'),
 ('000002', 'Mary', '23', '2022-07-18', 'Female', '13000', 'Front End', 'Shenzhen', '123456'),
 ('000003', 'Peter', '26', '2020-01-04', 'Male', '12000', 'Front End', 'Shenzhen', '123456'),
@@ -36,7 +36,7 @@ INSERT INTO `employees` (`EMPLOYEE_ID`, `EMPLOYEE_NAME`, `AGE`, `ENTRY_DATE`,
 ('000030', 'Brian', '28', '2021-08-29', 'Male', '11000', 'Testing', 'Berlin', '123456');
 
 INSERT INTO `administrators` (`ADMINISTRATOR_ID`, `SUBCOMPANY_ID`,
-                           `ADMINISTRATOR_NAME`, 'PASSWORD') VALUES
+                           `ADMINISTRATOR_NAME`, `PASSWORD`) VALUES
 ('100001', '000001', 'Lucas', '123456'),
 ('100002', '000002', 'Lily', '123456'),
 ('100003', '000003', 'Tom', '123456');

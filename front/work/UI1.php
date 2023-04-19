@@ -11,7 +11,7 @@
      $id = $_COOKIE['id'];
      if (empty($id)) {
        // 未登录，跳转
-        echo "<script>javascript:alert('未登录!');location.href='login.php';</script>";
+        // echo "<script>location.href='login.php';</script>";
         exit;
      }
       $sql = "SELECT * FROM administrators LEFT JOIN subcompanies ON administrators.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
@@ -46,13 +46,13 @@
   <body>
     <!-- 左边框 -->
     <div class="sidebar">
-        <h2>菜单</h2>
+        <h2>menu</h2>
             <ul>
-                <li><a href="UI1.php" href="#basic-info" id="info-link">基本信息</a></li>
-                <li><a href="UI2.php" href="#employee-appointments" id="employee-link">员工任用</a></li>
-                <li><a href="UI3.php" href="#project-establishment" id="prj-link">项目设立</a></li>
+                <li><a href="UI1.php" href="#basic-info" id="info-link">Baisc Information</a></li>
+                <li><a href="UI2.php" href="#employee-appointments" id="employee-link">Staff Arrangement</a></li>
+                <li><a href="UI3.php" href="#project-establishment" id="prj-link">Creat Project</a></li>
             </ul>
-            <h3>公司信息</h3>
+            <h3>company information</h3>
             <p>Company ID:<?php echo $adminInfo['SUBCOMPANY_ID']; ?></p>
             <p>location:<?php echo $adminInfo['LOCATION']; ?></p>
             <p>capital:<?php echo $adminInfo['BUDGET']; ?></p>
@@ -64,7 +64,7 @@
     <div class="main">
       <h1>csc3170</h1>
       <section id="basic-info">
-        <h2>个人信息</h2>
+        <h2>Personal Information</h2>
         <div>
           <label for="name" >Name: <?php echo $adminInfo['ADMINISTRATOR_NAME']; ?></label>
         </div>
@@ -85,90 +85,12 @@
               echo "<h3>Manager ID:{$project['MANAGER_ID']}</h3>";
             }
          ?>
-
-
-<!--         <h3>Project 1:</h3>
-        <p>Project ID:</p>
-        <p>Name:</p>
-        <p>Start-date:</p>
-        <p>End-date:</p>
-        <p>Budget:</p>
-        <p>Manager ID:</p> -->
-
-
-
-<!--         <h3>Project 2:</h3>
-        <p>Project ID:</p>
-        <p>Name:</p>
-        <p>Start-date:</p>
-        <p>End-date:</p>
-        <p>Budget:</p>
-        <p>Manager ID:</p>
-        <h3>Project 3:</h3>
-        <p>Project ID:</p>
-        <p>Name:</p>
-        <p>Start-date:</p>
-        <p>End-date:</p>
-        <p>Budget:</p>
-        <p>Manager ID:</p> -->
       </section>
     
 
       <section id="project-establishment" style="display: none;">
       </section>
     </div>
-
-<!--       <script>
-        let infoLink = document.getElementById("info-link");
-        let employeeLink = document.getElementById("employee-link");
-        let prjLink = document.getElementById("prj-link");
-        var sidebarLinks = document.querySelectorAll(".sidebar li");
-        sidebarLinks.forEach(function(link) {
-        link.addEventListener("click", function(event) {
-        event.preventDefault();
-
-    // 移除之前的阴影效果
-        sidebarLinks.forEach(function(l) {
-        l.classList.remove("active");
-        });
-
-    // 添加阴影效果
-        this.classList.add("active");
-        });
-        });
-
-
-
-        employeeLink.addEventListener("click", function(event) {
-        event.preventDefault();
-        let employeeSection = document.getElementById("employee-appointment");
-        let mainSections = document.querySelectorAll(".main section");
-        for (let i = 0; i < mainSections.length; i++) {
-        mainSections[i].style.display = "none";
-        }
-        employeeSection.style.display = "block";
-        })
-
-        infoLink.addEventListener("click", function(event) {
-        event.preventDefault();
-        let infoSection = document.getElementById("basic-info");
-        let mainSections = document.querySelectorAll(".main section");
-        for (let i = 0; i < mainSections.length; i++) {
-        mainSections[i].style.display = "none";
-        }
-        infoSection.style.display = "block";
-        })
-
-        prjLink.addEventListener("click", function(event) {
-        event.preventDefault();
-        let prjSection = document.getElementById("project-establishment");
-        let mainSections = document.querySelectorAll(".main section");
-        for (let i = 0; i < mainSections.length; i++) {
-        mainSections[i].style.display = "none";
-        }
-        prjSection.style.display = "block";
-        });
-    </script> -->
 
   </body>
 </html>
