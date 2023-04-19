@@ -10,31 +10,30 @@
     require './config.php';
      $id = $_COOKIE['id'];
      if (empty($id)) {
-       // 未登录，跳转
         // echo "<script>location.href='login.php';</script>";
         exit;
      }
       $sql = "SELECT * FROM administrators LEFT JOIN subcompanies ON administrators.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
       $result = $mysqli->query($sql);
-      $adminInfo = $result->fetch_assoc();
+      $administrator_Info = $result->fetch_assoc();
 
       $sql = "SELECT * FROM subcompanies LEFT JOIN administrators ON subcompanies.SUBCOMPANY_ID = administrators.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
       $result = $mysqli->query($sql);
-      $comInfo = $result->fetch_assoc();
+      $company_Info = $result->fetch_assoc();
 
-      // 查询员工数量
-      $sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$comInfo['LOCATION']}'";
+      // check the number of employees
+      $sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$company_Info['LOCATION']}'";
       // var_dump($sql);exit();
       $result = $mysqli->query($sql);
       $staff = $result->fetch_assoc();
 
-      // 查询项目数量
-      $sql = "SELECT count(*) as count from projects WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
+      // check the number of projects
+      $sql = "SELECT count(*) as count from projects WHERE ADMINISTRATOR_ID = {$administrator_Info['ADMINISTRATOR_ID']}";
       $result = $mysqli->query($sql);
       $projects = $result->fetch_assoc();
-      // 查询该老板下所有项目数据
 
-      $sql =  "SELECT projects.*,managers.MANAGER_ID FROM projects left join managers on projects.PROJECT_ID = managers.PROJECT_ID WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
+      // check all the projects created by the certain boss
+      $sql =  "SELECT projects.*,managers.MANAGER_ID,employees.* FROM (projects left join managers ON projects.PROJECT_ID = managers.PROJECT_ID) left join employees ON managers.MANAGER_ID = employees.EMPLOYEE_ID  WHERE ADMINISTRATOR_ID = {$administrator_Info['ADMINISTRATOR_ID']}";
       $projectrs= $mysqli->query($sql);
       $projectList = [];
       foreach($projectrs as $k => $item){
@@ -53,9 +52,9 @@
                 <li><a href="UI3.php" href="#project-establishment" id="prj-link">Creat Project</a></li>
             </ul>
             <h3>company information</h3>
-            <p>Company ID:<?php echo $adminInfo['SUBCOMPANY_ID']; ?></p>
-            <p>location:<?php echo $adminInfo['LOCATION']; ?></p>
-            <p>capital:<?php echo $adminInfo['BUDGET']; ?></p>
+            <p>Company ID:<?php echo $administrator_Info['SUBCOMPANY_ID']; ?></p>
+            <p>location:<?php echo $administrator_Info['LOCATION']; ?></p>
+            <p>capital:<?php echo $administrator_Info['BUDGET']; ?></p>
             <p>number of employees:<?php echo $staff['count']; ?></p>
             <p>number of projects:<?php echo $projects['count']; ?></p>
     </div>
@@ -66,10 +65,10 @@
       <section id="basic-info">
         <h2>Personal Information</h2>
         <div>
-          <label for="name" >Name: <?php echo $adminInfo['ADMINISTRATOR_NAME']; ?></label>
+          <label for="name" >Name: <?php echo $administrator_Info['ADMINISTRATOR_NAME']; ?></label>
         </div>
         <div>
-          <label for="ID" >ID: <?php echo $adminInfo['ADMINISTRATOR_ID']; ?></label>
+          <label for="ID" >ID: <?php echo $administrator_Info['ADMINISTRATOR_ID']; ?></label>
         </div>
         <h2>Project Information</h2>
 
@@ -82,7 +81,8 @@
               echo "<h3>Start-date:{$project['START_DATE']}</h3>";
               echo "<h3>End-date:{$project['END_DATE']}</h3>";
               echo "<h3>Budget:{$budget}</h3>";
-              echo "<h3>Manager ID:{$project['MANAGER_ID']}</h3>";
+              echo "<h3>Manager name:{$project['EMPLOYEE_NAME']}</h3>";
+              echo "<h3>Manager ID:{$project['EMPLOYEE_ID']}</h3>";
             }
          ?>
       </section>
