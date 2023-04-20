@@ -51,7 +51,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         $result = $mysqli->query($sql);
         $row = $result->fetch_assoc();
         if($row){
-          echo "<script>javascript:alert('Project_ID has already been existed！');location.href='adm_1.php';</script>";
+          echo "<script>javascript:alert('Project_ID has already been existed！');location.href='adm_2.php';</script>";
           exit;
         }
         
@@ -82,7 +82,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         $testCount = count($testIds);
 
         if (empty($frontIds) && empty($backIds) && empty($testIds)) {
-          echo "<script>javascript:alert('Please at least chose one employee！');location.href='adm_1.php';</script>";
+          echo "<script>javascript:alert('Please at least chose one employee！');location.href='adm_2.php';</script>";
           exit;
         }
 
@@ -122,7 +122,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         $row = $result->fetch_assoc();
         // compare with budget
         if ($total > $row['BUDGET']) {
-          echo "<script>javascript:alert('over budget！');location.href='adm_1.php';</script>";
+          echo "<script>javascript:alert('over budget！');location.href='adm_2.php';</script>";
           exit;
         }
         else {
@@ -158,11 +158,9 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           // managers add a new record
           $sql = "insert into managers(MANAGER_ID,PROJECT_ID) values ('{$_POST['Manager_ID']}','{$_POST['Project_ID']}')";
           $res = $mysqli->query($sql);
-            echo "<script>javascript:alert('Add success!');location.href='adm_1.php';</script>";
+            echo "<script>javascript:alert('Add success!');location.href='adm_2.php';</script>";
             exit;
     }
-    
-
   ?>
 
 <body class="w3-theme-l5">
@@ -305,7 +303,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
               <input type="text"name="Project_name" placeholder="Project_name" required="required" id="Project_name"><p></p>
               <input type="text"name="Manager_ID" placeholder="Manager_ID" required="required" id="Manager_ID"><p></p>
               <!-- <p contenteditable="true" class="w3-border w3-padding">Status: Feeling Blue</p> -->
-              <button type="button" class="w3-button w3-theme"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button> 
+              <button type="submit" class="w3-button w3-theme"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button> 
             </div>
           </div>
         </div>
