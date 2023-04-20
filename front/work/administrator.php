@@ -17,7 +17,6 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 		require './config.php';
 		$id = $_COOKIE['id'];
 		if (empty($id)) {
-		// 未登录，跳转
 			// echo "<script>location.href='login.php';</script>";
 			exit;
 		}
@@ -29,13 +28,13 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 		$result = $mysqli->query($sql);
 		$company_Info = $result->fetch_assoc();
 
-    // check the number of workers
+    	// check the number of workers
 		$sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$company_Info['LOCATION']}'";
 		// var_dump($sql);exit();
 		$result = $mysqli->query($sql);
 		$staff = $result->fetch_assoc();
 
-    // check the number of projects
+    	// check the number of projects
 		$sql = "SELECT count(*) as count from projects WHERE ADMINISTRATOR_ID = {$administrator_Info['ADMINISTRATOR_ID']}";
 		$result = $mysqli->query($sql);
 		$projects = $result->fetch_assoc();
@@ -137,15 +136,15 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 					<?php
 						foreach($projectList as $k => $project){
 						$num = ++ $k;
-            echo "<section class='w3-container w3-card w3-white w3-round w3-margin' id={$num}><br>";
-            echo "<h6 class='w3-text-theme'><i class='fa fa-calendar fa-fw w3-margin-right'></i>{$project['START_DATE']} - {$project['END_DATE']}</h6>";
-            echo "<h4>{$project['PROJECT_NAME']}</h4>";
-            echo "<hr class='w3-clear'>";
-            echo "<p>{$project['PROJECT_ID']}</p>";
-            echo "<p>Budget:{$project['BUDGET']}</p>";
-            echo "<p>Manager name:{$project['EMPLOYEE_NAME']}</hp>";
-            echo "<p>Manager ID:{$project['EMPLOYEE_ID']}</hp>";
-            echo "</section>";
+						echo "<section class='w3-container w3-card w3-white w3-round w3-margin' id={$num}><br>";
+						echo "<h6 class='w3-text-theme'><i class='fa fa-calendar fa-fw w3-margin-right'></i>{$project['START_DATE']} - {$project['END_DATE']}</h6>";
+						echo "<h4>{$project['PROJECT_NAME']}</h4>";
+						echo "<hr class='w3-clear'>";
+						echo "<p>{$project['PROJECT_ID']}</p>";
+						echo "<p>Budget:{$project['BUDGET']}</p>";
+						echo "<p>Manager name:{$project['EMPLOYEE_NAME']}</hp>";
+						echo "<p>Manager ID:{$project['EMPLOYEE_ID']}</hp>";
+						echo "</section>";
 						}
 					?>
 				<!-- End Middle Column -->
