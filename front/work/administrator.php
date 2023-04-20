@@ -13,40 +13,40 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 </style>
 </head>
 
-<?php
-    require './config.php';
-    $id = $_COOKIE['id'];
-    if (empty($id)) {
-       // 未登录，跳转
-        // echo "<script>location.href='login.php';</script>";
-        exit;
-    }
-    $sql = "SELECT * FROM administrators LEFT JOIN subcompanies ON administrators.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
-    $result = $mysqli->query($sql);
-    $adminInfo = $result->fetch_assoc();
+	<?php
+		require './config.php';
+		$id = $_COOKIE['id'];
+		if (empty($id)) {
+		// 未登录，跳转
+			// echo "<script>location.href='login.php';</script>";
+			exit;
+		}
+		$sql = "SELECT * FROM administrators LEFT JOIN subcompanies ON administrators.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
+		$result = $mysqli->query($sql);
+		$adminInfo = $result->fetch_assoc();
 
-    $sql = "SELECT * FROM subcompanies LEFT JOIN administrators ON subcompanies.SUBCOMPANY_ID = administrators.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
-    $result = $mysqli->query($sql);
-    $comInfo = $result->fetch_assoc();
+		$sql = "SELECT * FROM subcompanies LEFT JOIN administrators ON subcompanies.SUBCOMPANY_ID = administrators.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
+		$result = $mysqli->query($sql);
+		$comInfo = $result->fetch_assoc();
 
-    // 查询员工数量
-    $sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$comInfo['LOCATION']}'";
-    // var_dump($sql);exit();
-    $result = $mysqli->query($sql);
-    $staff = $result->fetch_assoc();
+		// 查询员工数量
+		$sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$comInfo['LOCATION']}'";
+		// var_dump($sql);exit();
+		$result = $mysqli->query($sql);
+		$staff = $result->fetch_assoc();
 
-    // 查询项目数量
-    $sql = "SELECT count(*) as count from projects WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
-    $result = $mysqli->query($sql);
-    $projects = $result->fetch_assoc();
-    // 查询该老板下所有项目数据
+		// 查询项目数量
+		$sql = "SELECT count(*) as count from projects WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
+		$result = $mysqli->query($sql);
+		$projects = $result->fetch_assoc();
+		// 查询该老板下所有项目数据
 
-    $sql =  "SELECT projects.*,managers.MANAGER_ID FROM projects left join managers on projects.PROJECT_ID = managers.PROJECT_ID WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
-    $projectrs= $mysqli->query($sql);
-    $projectList = [];
-    foreach($projectrs as $k => $item){
-        array_push($projectList,$item);
-    }
+		$sql =  "SELECT projects.*,managers.MANAGER_ID FROM projects left join managers on projects.PROJECT_ID = managers.PROJECT_ID WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
+		$projectrs= $mysqli->query($sql);
+		$projectList = [];
+		foreach($projectrs as $k => $item){
+			array_push($projectList,$item);
+		}
   	?>
 
 	<body class="w3-theme-l5">
@@ -76,8 +76,10 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 		<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
 			<!-- The Grid -->
 			<div class="w3-row">
+
 				<!-- Left Column -->
 				<div class="w3-col m2">
+					
 					<!-- Profile -->
 					<div class="w3-card w3-round w3-white">
 						<div class="w3-container">
@@ -93,14 +95,14 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 					<!-- Accordion -->
 					<div class="w3-card w3-round">
 						<div class="w3-white">
-							<button onclick="Function1('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Projects</button>
+							<button onclick="Function1('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>My Projects</button>
 							<div id="Demo1" class="w3-hide w3-container">
 								<br>
-								<button type='button' class='w3-button w3-theme-d1 w3-margin-bottom w3-sepia-min' onclick='All()'>Show All</button>
+								<button type='button' class='w3-button w3-theme-d1 w3-margin-bottom w3-sepia-min w3-round' onclick='All()'>Show All</button>
 								<?php
 									foreach($projectList as $k => $project){
 									$num = ++ $k;
-									echo "<button type='button' class='w3-button w3-theme-d1 w3-margin-bottom w3-sepia-min' onclick='Function2({$num})'>Project {$num}</button>";
+									echo "<button type='button' class='w3-button w3-theme-d1 w3-margin-bottom w3-sepia-min w3-round' onclick='Function2({$num})'>Project {$num}</button>";
 									}
 								?>
 							</div>
@@ -121,8 +123,17 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 					</div>
 					<br>
 				</div>
-				<!-- Middle Column -->
+
+				<!-- Right Column -->
 				<div class=" main w3-col m10">
+
+					<!-- Padding -->
+					<div class="w3-row-padding">
+						<div class="w3-col m12">
+							<div class="w3-container w3-padding w3-card w3-round w3-theme-d4"></div>
+						</div>
+					</div>
+
 					<?php
 						foreach($projectList as $k => $project){
 						$budget = $project['FRONT_END_NUMBER'] + $project['BACK_END_NUMBER'] + $project['TESTING_NUMBER'];
