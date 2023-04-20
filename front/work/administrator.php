@@ -23,25 +23,25 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 		}
 		$sql = "SELECT * FROM administrators LEFT JOIN subcompanies ON administrators.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
 		$result = $mysqli->query($sql);
-		$adminInfo = $result->fetch_assoc();
+		$administrator_Info = $result->fetch_assoc();
 
 		$sql = "SELECT * FROM subcompanies LEFT JOIN administrators ON subcompanies.SUBCOMPANY_ID = administrators.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
 		$result = $mysqli->query($sql);
-		$comInfo = $result->fetch_assoc();
+		$company_Info = $result->fetch_assoc();
 
-		// 查询员工数量
-		$sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$comInfo['LOCATION']}'";
+    // check the number of workers
+		$sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$company_Info['LOCATION']}'";
 		// var_dump($sql);exit();
 		$result = $mysqli->query($sql);
 		$staff = $result->fetch_assoc();
 
-		// 查询项目数量
-		$sql = "SELECT count(*) as count from projects WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
+    // check the number of projects
+		$sql = "SELECT count(*) as count from projects WHERE ADMINISTRATOR_ID = {$administrator_Info['ADMINISTRATOR_ID']}";
 		$result = $mysqli->query($sql);
 		$projects = $result->fetch_assoc();
-		// 查询该老板下所有项目数据
 
-		$sql =  "SELECT projects.*,managers.MANAGER_ID FROM projects left join managers on projects.PROJECT_ID = managers.PROJECT_ID WHERE ADMINISTRATOR_ID = {$adminInfo['ADMINISTRATOR_ID']}";
+		// check the projects belong to the boss
+    $sql =  "SELECT projects.*,managers.MANAGER_ID,employees.* FROM (projects left join managers ON projects.PROJECT_ID = managers.PROJECT_ID) left join employees ON managers.MANAGER_ID = employees.EMPLOYEE_ID  WHERE ADMINISTRATOR_ID = {$administrator_Info['ADMINISTRATOR_ID']}";
 		$projectrs= $mysqli->query($sql);
 		$projectList = [];
 		foreach($projectrs as $k => $item){
@@ -86,8 +86,8 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 							<h4 class="w3-center">My Profile</h4>
 							<p class="w3-center"><img src="https://www.w3schools.com/w3images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
 							<hr>
-							<p><i class="fa fa-address-card fa-fw w3-margin-right w3-text-theme"></i><?php echo $adminInfo['ADMINISTRATOR_ID']; ?></p>
-							<p><i class="fa fa-address-book fa-fw w3-margin-right w3-text-theme"></i><?php echo $adminInfo['ADMINISTRATOR_NAME']; ?></p>
+							<p><i class="fa fa-address-card fa-fw w3-margin-right w3-text-theme"></i><?php echo $administrator_Info['ADMINISTRATOR_ID']; ?></p>
+							<p><i class="fa fa-address-book fa-fw w3-margin-right w3-text-theme"></i><?php echo $administrator_Info['ADMINISTRATOR_NAME']; ?></p>
 						</div>
 					</div>
 					<br>
@@ -114,9 +114,9 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 					<div class="w3-card w3-round w3-white w3-hide-small">
 						<div class="w3-container">
 							<p>Company Informations</p>
-							<p class="w3-small">Company ID: <?php echo $adminInfo['SUBCOMPANY_ID']; ?></p>
-							<p class="w3-small">location: <?php echo $adminInfo['LOCATION']; ?></p>
-							<p class="w3-small">Budget: <?php echo $adminInfo['BUDGET']; ?></p>
+							<p class="w3-small">Company ID: <?php echo $administrator_Info['SUBCOMPANY_ID']; ?></p>
+							<p class="w3-small">location: <?php echo $administrator_Info['LOCATION']; ?></p>
+							<p class="w3-small">Budget: <?php echo $administrator_Info['BUDGET']; ?></p>
 							<p class="w3-small">number of employees: <?php echo $staff['count']; ?></p>
 							<p class="w3-small">number of projects: <?php echo $projects['count']; ?></p>
 						</div>
@@ -136,17 +136,16 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 					<?php
 						foreach($projectList as $k => $project){
-						$budget = $project['FRONT_END_NUMBER'] + $project['BACK_END_NUMBER'] + $project['TESTING_NUMBER'];
 						$num = ++ $k;
-						echo "<section class='w3-container w3-card w3-white w3-round w3-margin' id={$num}><br>";
-						echo "<h6 class='w3-text-theme'><i class='fa fa-calendar fa-fw w3-margin-right'></i>Jun 2023 - Jun 2024</h6>";
-						echo "<h4>{$project['PROJECT_NAME']}</h4>";
-						echo "<hr class='w3-clear'>";
-						echo "<p>{$project['PROJECT_ID']}</p>";
-						// echo "<p>{$project['MANAGER_ID']}</p>";
-						echo "<p>Budget:{$budget}</p>";
-						// echo "<p>{$manager['EMPLOYEE_NAME']}</p>";
-						echo "</section>";
+            echo "<section class='w3-container w3-card w3-white w3-round w3-margin' id={$num}><br>";
+            echo "<h6 class='w3-text-theme'><i class='fa fa-calendar fa-fw w3-margin-right'></i>{$project['START_DATE']} - {$project['END_DATE']}</h6>";
+            echo "<h4>{$project['PROJECT_NAME']}</h4>";
+            echo "<hr class='w3-clear'>";
+            echo "<p>{$project['PROJECT_ID']}</p>";
+            echo "<p>Budget:{$project['BUDGET']}</p>";
+            echo "<p>Manager name:{$project['EMPLOYEE_NAME']}</hp>";
+            echo "<p>Manager ID:{$project['EMPLOYEE_ID']}</hp>";
+            echo "</section>";
 						}
 					?>
 				<!-- End Middle Column -->
