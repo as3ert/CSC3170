@@ -87,7 +87,7 @@ foreach($rs as $k => $item) {
 					echo "</div>";
 					echo "<div class='w3-container'>";
 					echo "<h5 class='w3-opacity'><b>Project duration</b></h5>";
-					echo "<h6 class='w3-text-theme'><i class='fa fa-calendar w3-margin-right'>{$project['START_DATE']}---{$project['END_DATE']}</i></h6><br>";
+					echo "<h6 class='w3-text-theme'><i class='fa fa-calendar w3-margin-right'></i>{$project['START_DATE']}---{$project['END_DATE']}</h6><br>";
 					echo "</div>";
 					echo "</div>";
 				}
@@ -99,16 +99,9 @@ foreach($rs as $k => $item) {
 		<!-- End Page Container -->
 		</div>
 
-	<!-- <footer class="w3-container w3-teal w3-center w3-margin-top">
-	<p>Welcome to XXX company</p>
-	<i class="fa fa-facebook-official w3-hover-opacity"></i>
-	<i class="fa fa-instagram w3-hover-opacity"></i>
-	<i class="fa fa-snapchat w3-hover-opacity"></i>
-	<i class="fa fa-pinterest-p w3-hover-opacity"></i>
-	<i class="fa fa-twitter w3-hover-opacity"></i>
-	<i class="fa fa-linkedin w3-hover-opacity"></i>
-	<p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">3170group X</a></p>
-	</footer> -->
+		<footer class="w3-container w3-theme-d5">
+			<p>Powered by <a href="https://github.com/as3ert/csc3170" target="_blank">Group 8</a></p>
+		</footer>
 
 	</body>
 </html>

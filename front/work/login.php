@@ -19,7 +19,8 @@
 	    $row = $result->fetch_assoc();
 	    if ($row) {
     	    setcookie('id',$name);
-    		echo "<script>javascript:alert('Login successfully!!');location.href='UI1.php';</script>";
+    		echo "<script>javascript:alert('Login successfully!!');location.href='administrator.php';</script>";
+    		// echo "<script>javascript:alert('Login successfully!!');location.href='UI1.php';</script>";
     		exit;
 	    }else{
     		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
