@@ -52,6 +52,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           $Position = $_POST['Position'];
           $Salary = $_POST['Salary'];
           $date = $_POST['Entry_date'];
+          $password = $_POST['password'];
 
           // <input type="text"name="Employee_ID" placeholder="Employee_ID" required="required" id="Employee_ID">
           // <input type="text"name="Name" placeholder="Name" required="required" id="Name">
@@ -86,7 +87,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 
           // employees表新增一条记录
-          $sql = "insert into employees(EMPLOYEE_ID,EMPLOYEE_NAME,AGE,GENDER,POSITION,SALARY,PASSWORD,LOCATION, ENTRY_DATE) values ('{$Worker_ID}','{$name}','{$age}','{$gender}','{$Position}','{$Salary}','123456','{$adminInfo['LOCATION']}','{$date}')";
+          $sql = "insert into employees(EMPLOYEE_ID,EMPLOYEE_NAME,AGE,GENDER,POSITION,SALARY,LOCATION, ENTRY_DATE, PASSWORD) values ('{$Worker_ID}','{$name}','{$age}','{$gender}','{$Position}','{$Salary}','{$adminInfo['LOCATION']}','{$date}', '{$password}')";
           $res = $mysqli->query($sql);
             echo "<scriptlocation.href='adm_2.php';</script>";
             exit;
@@ -188,6 +189,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
                 <p></p>
                 <input type="text"name="Position" placeholder="Position" required="required" id="Position">
                 <input type="text"name="Salary" placeholder="Salary" required="required" id="Salary">
+                <input type="text"name="password" placeholder="password" required="required" id="password">
                 <input type="date"name="Entry_date" placeholder="Entry_date" required="required" id="Entry_date">
                 <p></p>
                 <button type="submit" name="submit" class="w3-button w3-theme" value="Add Staff" onclick="act1()"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button> 
