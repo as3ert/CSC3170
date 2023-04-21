@@ -19,8 +19,7 @@
 	    $row = $result->fetch_assoc();
 	    if ($row) {
     	    setcookie('id',$name);
-    		echo "<script>javascript:alert('Login successfully!!');location.href='administrator.php';</script>";
-    		// echo "<script>javascript:alert('Login successfully!!');location.href='UI1.php';</script>";
+    		echo "<script>javascript:location.href='administrator.php';</script>";
     		exit;
 	    }else{
     		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
@@ -34,7 +33,7 @@
 	    if ($row) {
     	    setcookie('is_admin',0);
     	    setcookie('id',$name);
-    		echo "<script>javascript:alert('Login successfully!!');location.href='worker.php';</script>";
+    		echo "<script>javascript:location.href='worker.php';</script>";
     		exit;
 	    } else {
     		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
