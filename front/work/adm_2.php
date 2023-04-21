@@ -71,7 +71,6 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
             exit;
           }
 
-
           // employees表新增一条记录
           $sql = "insert into employees(EMPLOYEE_ID,EMPLOYEE_NAME,AGE,GENDER,POSITION,SALARY,PASSWORD,LOCATION, ENTRY_DATE) values ('{$Worker_ID}','{$name}','{$age}','{$gender}','{$Position}','{$Salary}','123456','{$adminInfo['LOCATION']}','{$date}')";
           $res = $mysqli->query($sql);
@@ -87,6 +86,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
             echo "<script>location.href='adm_2.php';</script>";
             exit;
           }
+
           // 2、删除employees表数据
           $sql = "delete FROM employees where (EMPLOYEE_ID='{$Worker_ID}')";
           $result = $mysqli->query($sql);
@@ -219,11 +219,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 <br>
 
 <!-- Footer -->
-<footer class="w3-container w3-theme-d3 w3-padding-16">
-  <h5>Footer</h5>
-</footer>
-
-<footer class="w3-container w3-theme-d5">
+<footer class="w3-container w3-theme-d5 w3-padding-16">
   <p>Powered by <a href="https://github.com/as3ert/csc3170" target="_blank">Gruop 8</a></p>
 </footer>
  

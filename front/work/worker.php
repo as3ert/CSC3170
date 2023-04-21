@@ -58,15 +58,15 @@
 							<p class="w3-center"><img src="https://www.w3schools.com/w3images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
 							<hr>
 							<div style="display: none"><script>  GetArgsFromHref('http://127.0.0.1:5500/login.html', sArgName)</script></div>
+							<p><i class="fa fa-book fa-fw w3-margin-right w3-large w3-text-theme"></i><?php echo $adminInfo['EMPLOYEE_NAME']; ?></p>
 							<p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-theme"></i><?php echo $adminInfo['POSITION']; ?></p>
-							<p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-theme"></i><?php echo $adminInfo['LOCATION']; ?></p>
-							<p><i class="fa fa-calendar fa-fw w3-margin-right w3-large w3-text-theme"></i>Entry date</p>
+							<p><i class="fa fa-calendar fa-fw w3-margin-right w3-large w3-text-theme"></i><?php echo $adminInfo['ENTRY_DATE']; ?></p>
 							<hr>
-							<p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-text-theme"></i>Subcompany</b></p>
-							<p>Company 1</p>
-							<div class="w3-light-grey w3-round-xlarge"></div><br>
+							<p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-text-theme"></i>Location</b></p>
+							<p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-theme"></i><?php echo $adminInfo['LOCATION']; ?></p>
+							<div class="w3-light-grey w3-round-xlarge"></div>
 						</div>
-					</div><br>
+					</div><br><br><br><br>
 				<!-- End Left Column -->
 				</div>
 				<!-- Right Column -->
