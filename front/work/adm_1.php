@@ -45,13 +45,14 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         array_push($staffList,$item);
     }
     
-    if(isset($_POST["submit"])){
+    if ($_SERVER['REQUEST_METHOD']=='POST') {
+      if ($_GET['act'] == 'add'){
         // whether project_ID has already existed
         $sql = "select * from projects where (PROJECT_ID='{$_POST['Project_ID']}')";
         $result = $mysqli->query($sql);
         $row = $result->fetch_assoc();
         if($row){
-          echo "<script>javascript:alert('Project_ID has already been existed!');location.href='adm_2.php';</script>";
+          echo "<script>javascript:alert('Project_ID has already been existed!');location.href='adm_1.php';</script>";
           exit;
         }
         
@@ -133,7 +134,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           $res = $mysqli->query($sql);
         }
           // projects add a new record
-          $sql = "insert into projects(PROJECT_ID,ADMINISTRATOR_ID,PROJECT_NAME,START_DATE,END_DATE,FRONT_END_NUMBER,BACK_END_NUMBER,TESTING_NUMBER,BUDGET) values ('{$_POST['Project_ID']}','{$adminInfo['ADMINISTRATOR_ID']}','{$_POST['Project_name']}','{$_POST['Start_date']}','{$_POST['End_date']}','{$_POST['front_end_number']}','{$_POST['back_end_number']}','{$_POST['testing_number']}','{$total}')";
+          $sql = "insert into projects(PROJECT_ID,ADMINISTRATOR_ID,PROJECT_NAME,START_DATE,END_DATE,FRONT_END_NUMBER,BACK_END_NUMBER,TESTING_NUMBER,BUDGET) values ('{$_POST['Project_ID']}','{$adminInfo['ADMINISTRATOR_ID']}','{$_POST['Project_name']}','{$_POST['Start_date']}','{$_POST['End_date']}','{$_POST['Front_end_number']}','{$_POST['Back_end_number']}','{$_POST['Testing_number']}','{$total}')";
           $res = $mysqli->query($sql);
 
           // jobs add new records
@@ -161,6 +162,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
             echo "<script>javascript:alert('Add success!');location.href='adm_1.php';</script>";
             exit;
     }
+  }
   ?>
 
 <body class="w3-theme-l5">
@@ -228,6 +230,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           <div class="w3-card w3-round w3-white">
             <div class="w3-container w3-padding">
               <h4 class="w3-opacity">Create a new project</h4>
+              <form name="form" method="post" action="adm_1.php"  enctype="multipart/form-data">
               <input type="text"name="Project_ID" placeholder="Project_ID" required="required" id="Project_ID">
               <input type="text"name="Project_name" placeholder="Project_name" required="required" id="Project_name">
               <p></p>
@@ -235,20 +238,9 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
               <input type="text"name="Back_end_number" placeholder="Back_end_number" required="required" id="Back_end_number">
               <input type="text"name="Testing_number" placeholder="Testing_number" required="required" id="Testing_number">
               <p></p>
-              <td>
-                Manager:
-                <select name='Manager_ID' id='Manager_ID' required/>
-                  <?php
-                        foreach($staffList as $staff){
-                          if ($staff['MANAGE_PROJECT_ID'] == NULL) {
-                            echo "<option value='{$staff['EMPLOYEE_ID']}'>{$staff['EMPLOYEE_NAME']}</option>";
-                          }
-                        }
-                    ?>
-                  </select>
-              </td>
+              <input type="date"name="Start_date" placeholder="Start_date" required="required" id="Start_date">
+              <input type="date"name="End_date" placeholder="End_date" required="required" id="End_date"> 
               <p></p>
-              
               <td>
                 Front_end_staff:
                   <?php
@@ -274,8 +266,8 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
                     ?>
                 </select>
               </td>
-              <p></p>
 
+              <p></p>
               <td>Testing_staff:
                 <?php
                       foreach($staffList as $staff){
@@ -284,29 +276,26 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
                           echo "<label>{$staff['EMPLOYEE_NAME']} </label>";
                         }
                       }
-                    ?>
+                ?>
                 </select>
               </td>
               <p></p>
-              <button class="w3-button w3-theme" type="submit" name="submit" value="Add"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button> 
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="w3-row-padding  w3-margin-bottom" >
-        <div class="w3-col m12">
-          <div class="w3-card w3-round w3-white">
-            <div class="w3-container w3-padding">
-              <h4 class="w3-opacity">Delete a project</h4>
-              <input type="text"name="Project_ID" placeholder="Project_ID" required="required" id="Project_ID"><p></p>
-              <input type="text"name="Project_name" placeholder="Project_name" required="required" id="Project_name"><p></p>
-              <input type="text"name="Manager_ID" placeholder="Manager_ID" required="required" id="Manager_ID"><p></p>
-              <!-- <button type="button" class="w3-button w3-theme"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button>  -->
-              <tr>
-              <td colspan="2">
-                  <input type="submit" name="submit" value="Add" />
-            </tr>
+              <td>
+                Manager:
+                <select name='Manager_ID' id='Manager_ID' required/>
+                  <?php
+                        echo "<option value=''> </option>";
+                        foreach($staffList as $staff){
+                          if ($staff['MANAGE_PROJECT_ID'] == NULL) {
+                            echo "<option value='{$staff['EMPLOYEE_ID']}'>{$staff['EMPLOYEE_NAME']}</option>";
+                          }
+                        }
+                    ?>
+                  </select>
+              </td>
+              <p></p>
+              <button class="w3-button w3-theme" type="submit" name="submit" value="Add" onclick="act1()"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button> 
+              </form>
             </div>
           </div>
         </div>
@@ -332,7 +321,13 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 </footer>
  
 <script>
-// Accordion
+// Accordion\
+function act1(){
+         document.form.action="adm_1.php?act=add";
+         document.form.submit();
+      }
+
+
 function Function1(id) {
   var x = document.getElementById(id);
   if (x.className.indexOf("w3-show") == -1) {
