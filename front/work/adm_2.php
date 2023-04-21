@@ -40,23 +40,36 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
       $projects = $result->fetch_assoc();
     $act = !empty($_GET['act']) ? trim($_GET['act']) : '';
 
-    if ($_SERVER['REQUEST_METHOD']==='POST') {
-
+    if ($_SERVER['REQUEST_METHOD']=='POST') {
+      // var_dump($_POST);
+      // var_dump($_GET['act']); exit();
       if ($_GET['act'] == 'add') {
-          $Worker_ID = $_POST['Worker_ID'];
-          $name = $_POST['name'];
-          $age = $_POST['age'];
-          $gender = $_POST['gender'];
+          // var_dump($_POST);
+          $Worker_ID = $_POST['Employee_ID'];
+          $name = $_POST['Name'];
+          $age = $_POST['Age'];
+          $gender = $_POST['Gender'];
           $Position = $_POST['Position'];
           $Salary = $_POST['Salary'];
-          $date = $_POST['date'];
+          $date = $_POST['Entry_date'];
+
+          // <input type="text"name="Employee_ID" placeholder="Employee_ID" required="required" id="Employee_ID">
+          // <input type="text"name="Name" placeholder="Name" required="required" id="Name">
+          // <input type="text"name="Age" placeholder="Age" required="required" id="Age">
+          // <input type="text"name="Gender" placeholder="Gender" required="required" id="Gender">
+          // <p></p>
+          // <input type="text"name="Position" placeholder="Position" required="required" id="Position">
+          // <input type="text"name="Salary" placeholder="Salary" required="required" id="Salary">
+          // <input type="date"name="Entry_date" placeholder="Entry_date" required="required" id="Entry_date">
+          // <p></p>
+
 
           if (empty($Worker_ID) || empty($name) || empty($Position) || empty($Salary) || empty($age) || empty($gender) || empty($date)) {
             echo "<script>location.href='adm_2.php';</script>";
             exit;
           }
 
-          // 判断第一位是否是1
+          // 判断第一位是否是0
           if($Worker_ID[0] != 0){
             echo "<script>location.href='adm_2.php';</script>";
             exit;
@@ -71,13 +84,15 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
             exit;
           }
 
+
           // employees表新增一条记录
           $sql = "insert into employees(EMPLOYEE_ID,EMPLOYEE_NAME,AGE,GENDER,POSITION,SALARY,PASSWORD,LOCATION, ENTRY_DATE) values ('{$Worker_ID}','{$name}','{$age}','{$gender}','{$Position}','{$Salary}','123456','{$adminInfo['LOCATION']}','{$date}')";
           $res = $mysqli->query($sql);
             echo "<scriptlocation.href='adm_2.php';</script>";
             exit;
-      }else{
-        $Worker_ID = $_POST['Worker_ID1'];
+      }
+      else{
+        $Worker_ID = $_POST['Employee_ID'];
           // 1、首先查询该id是否存在employees表
           $sql = "select * from employees where (EMPLOYEE_ID='$Worker_ID')";
           $result = $mysqli->query($sql);
@@ -86,7 +101,6 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
             echo "<script>location.href='adm_2.php';</script>";
             exit;
           }
-
           // 2、删除employees表数据
           $sql = "delete FROM employees where (EMPLOYEE_ID='{$Worker_ID}')";
           $result = $mysqli->query($sql);
@@ -165,48 +179,41 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         <div class="w3-col m12">
           <div class="w3-card w3-round w3-white">
             <div class="w3-container w3-padding">
+              <form name="form" method="post" action="adm_2.php"  enctype="multipart/form-data">
               <h4 class="w3-opacity">ADD AN NEW EMPLOYEE</h4>
-              <input type="text"name="Employee_ID" placeholder="Employee_ID" required="required" id="Employee_ID">
-              <input type="text"name="Name" placeholder="Name" required="required" id="Name">
-              <input type="text"name="Age" placeholder="Age" required="required" id="Age">
-              <input type="text"name="Gender" placeholder="Gender" required="required" id="Gender">
-              <p></p>
-              <input type="text"name="Position" placeholder="Position" required="required" id="Position">
-              <input type="text"name="Salary" placeholder="Salary" required="required" id="Salary">
-              <input type="date"name="Entry_date" placeholder="Entry_date" required="required" id="Entry_date">
-              <p></p>
-              <button type="button" class="w3-button w3-theme" value="Add Staff"  onclick="act1()"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button> 
+                <input type="text"name="Employee_ID" placeholder="Employee_ID" required="required" id="Employee_ID">
+                <input type="text"name="Name" placeholder="Name" required="required" id="Name">
+                <input type="text"name="Age" placeholder="Age" required="required" id="Age">
+                <input type="text"name="Gender" placeholder="Gender" required="required" id="Gender">
+                <p></p>
+                <input type="text"name="Position" placeholder="Position" required="required" id="Position">
+                <input type="text"name="Salary" placeholder="Salary" required="required" id="Salary">
+                <input type="date"name="Entry_date" placeholder="Entry_date" required="required" id="Entry_date">
+                <p></p>
+                <button type="submit" name="submit" class="w3-button w3-theme" value="Add Staff" onclick="act1()"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button> 
+              </form>
+
+              <!-- <input type="button" name="" value="Add Staff"  onclick="act1()"  /> -->
             </div>
           </div>
         </div>
       </div>
-
+      
       <div class="w3-row-padding  w3-margin-bottom" >
         <div class="w3-col m12">
           <div class="w3-card w3-round w3-white">
             <div class="w3-container w3-padding">
+              <form name="frm" method="post" action="adm_2.php"  enctype="multipart/form-data">
               <h4 class="w3-opacity">DELETE AN EMPLOYEE</h4>
-              <input type="text"name="Employee_ID" placeholder="Employee_ID" required="required" id="Employee_ID"><p></p>
-              <input type="text"name="Name" placeholder="Name" required="required" id="Name"><p></p>
-              <input type="text"name="Position" placeholder="Position" required="required" id="Position"><p></p>
-              <button type="button" class="w3-button w3-theme" value="Delete" onclick="act2()"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button> 
+              <input type="text"name="Employee_ID" placeholder="Employee_ID" id="Employee_ID"><p></p>
+              <button type="submint" name="submint" class="w3-button w3-theme" value="Delete" onclick="act2()"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button> 
+              <!-- <input type="button" name="" value="Add Staff"  onclick="act2()"  /> -->
+              </form>
             </div>
           </div>
         </div>
-      </div>
-      <script>
-      function act1(){
-        console.log(11111)
-         document.frm.action="adm_2.php?act=add";
-         document.frm.submit();   
-      }
-      function act2(){
-         document.frm.action="adm_2.php?act=delete";
-         document.frm.submit();   
-      }
-      </script>
-      
-    <!-- End Middle Column -->
+      </div>      
+      <!-- End Middle Column -->
     </div>
     
 
@@ -218,13 +225,24 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 </div>
 <br>
 
-<!-- Footer -->
-<footer class="w3-container w3-theme-d5 w3-padding-16">
+
+<footer class="w3-container w3-theme-d5">
   <p>Powered by <a href="https://github.com/as3ert/csc3170" target="_blank">Gruop 8</a></p>
 </footer>
  
 <script>
 // Accordion
+
+function act1(){
+         document.form.action="adm_2.php?act=add";
+         document.form.submit();
+      }
+
+function act2(){
+         document.frm.action="adm_2.php?act=delete";
+         document.frm.submit();   
+      }
+
 function Function1(id) {
   var x = document.getElementById(id);
   if (x.className.indexOf("w3-show") == -1) {
