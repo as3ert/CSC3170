@@ -82,7 +82,7 @@
 
 					<?php
 						foreach($projectList as $k => $project){
-							echo "<section class='w3-container w3-card w3-white w3-round w3-margin' id='prj1'><br>";
+							echo "<div class='w3-container w3-card w3-white w3-round w3-margin' id='prj1'><br>";
 							echo "<h2 class='w3-text-grey w3-padding-10'><i class='fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-theme'></i>{$project['PROJECT_NAME']}</h2>";
 							echo "<div class='w3-container'>";
 							echo "<h5 class='w3-opacity'><b></b></h5>";
