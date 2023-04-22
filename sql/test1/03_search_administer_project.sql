@@ -1,4 +1,4 @@
--- Return project_ID belong to the administer
+-- Return project_ID belong to the administrator
 
 SELECT projects.PROJECT_ID
 FROM projects
