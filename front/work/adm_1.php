@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Administrator_web1</title>
+<title>Manage Projects</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -83,7 +83,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         $testCount = count($testIds);
 
         if (empty($frontIds) && empty($backIds) && empty($testIds)) {
-          echo "<script>javascript:alert('Please at least chose one employee！');location.href='adm_1.php';</script>";
+          echo "<script>javascript:alert('Please at least chose one employee!');location.href='adm_1.php';</script>";
           exit;
         }
 
@@ -159,7 +159,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           // managers add a new record
           $sql = "insert into managers(MANAGER_ID,PROJECT_ID) values ('{$_POST['Manager_ID']}','{$_POST['Project_ID']}')";
           $res = $mysqli->query($sql);
-            echo "<script>javascript:alert('Add success!');location.href='adm_1.php';</script>";
+            echo "<script>javascript:location.href='administrator.php';</script>";
             exit;
     }
   }
@@ -172,8 +172,8 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
  <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
   <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
   <a href="administrator.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Home</a>
-  <a href="adm_1.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-  <a href="adm_2.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
+				<a href="adm_1.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Manage Projects"><i class="fa fa-globe"></i></a>
+				<a href="adm_2.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Manage Employees"><i class="fa fa-user"></i></a>
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
     <img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
   </a>
@@ -231,12 +231,12 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
             <div class="w3-container w3-padding">
               <h4 class="w3-opacity">Create a new project</h4>
               <form name="form" method="post" action="adm_1.php"  enctype="multipart/form-data">
-              <input type="text"name="Project_ID" placeholder="Project_ID" required="required" id="Project_ID">
-              <input type="text"name="Project_name" placeholder="Project_name" required="required" id="Project_name">
+              <input type="text"name="Project_ID" placeholder="Project ID" required="required" id="Project_ID">
+              <input type="text"name="Project_name" placeholder="Project Name" required="required" id="Project_name">
               <p></p>
-              <input type="text"name="Front_end_number" placeholder="Front_end_number" required="required" id="Front_end_number">
-              <input type="text"name="Back_end_number" placeholder="Back_end_number" required="required" id="Back_end_number">
-              <input type="text"name="Testing_number" placeholder="Testing_number" required="required" id="Testing_number">
+              <input type="text"name="Front_end_number" placeholder="Front End Number" required="required" id="Front_end_number">
+              <input type="text"name="Back_end_number" placeholder="Back End Number" required="required" id="Back_end_number">
+              <input type="text"name="Testing_number" placeholder="Testing Number" required="required" id="Testing_number">
               <p></p>
               <input type="date"name="Start_date" placeholder="Start_date" required="required" id="Start_date">
               <input type="date"name="End_date" placeholder="End_date" required="required" id="End_date"> 
@@ -282,7 +282,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
               <p></p>
               <td>
                 Manager:
-                <select name='Manager_ID' id='Manager_ID' required/>
+                <select name='Manager_ID' id='Manager_ID' required>
                   <?php
                         echo "<option value=''> </option>";
                         foreach($staffList as $staff){

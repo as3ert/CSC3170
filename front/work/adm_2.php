@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Administrator_web2</title>
+<title>Manage Empolyees</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -41,10 +41,9 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
     $act = !empty($_GET['act']) ? trim($_GET['act']) : '';
 
     if ($_SERVER['REQUEST_METHOD']=='POST') {
-      // var_dump($_POST);
       // var_dump($_GET['act']); exit();
       if ($_GET['act'] == 'add') {
-          // var_dump($_POST);
+
           $Worker_ID = $_POST['Employee_ID'];
           $name = $_POST['Name'];
           $age = $_POST['Age'];
@@ -53,6 +52,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           $Salary = $_POST['Salary'];
           $date = $_POST['Entry_date'];
           $password = $_POST['password'];
+          // var_dump($_POST); exit();
 
           // <input type="text"name="Employee_ID" placeholder="Employee_ID" required="required" id="Employee_ID">
           // <input type="text"name="Name" placeholder="Name" required="required" id="Name">
@@ -89,7 +89,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           // employees表新增一条记录
           $sql = "insert into employees(EMPLOYEE_ID,EMPLOYEE_NAME,AGE,GENDER,POSITION,SALARY,LOCATION, ENTRY_DATE, PASSWORD) values ('{$Worker_ID}','{$name}','{$age}','{$gender}','{$Position}','{$Salary}','{$adminInfo['LOCATION']}','{$date}', '{$password}')";
           $res = $mysqli->query($sql);
-            echo "<scriptlocation.href='adm_2.php';</script>";
+            echo "<script>location.href='administrator.php';</script>";
             exit;
       }
       else{
@@ -113,7 +113,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           // 4、删除managers表数据
           $sql = "delete FROM managers where (MANAGER_ID='{$Worker_ID}')";
           $result = $mysqli->query($sql);
-          echo "<script>location.href='adm_2.php';</script>";
+          echo "<script>location.href='administrator.php';</script>";
             exit;
       }
     }
@@ -125,8 +125,8 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
  <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
   <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
   <a href="administrator.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Home</a>
-  <a href="adm_1.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-  <a href="adm_2.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
+				<a href="adm_1.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Manage Projects"><i class="fa fa-globe"></i></a>
+				<a href="adm_2.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Manage Employees"><i class="fa fa-user"></i></a>
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
     <img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
   </a>
@@ -181,15 +181,28 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           <div class="w3-card w3-round w3-white">
             <div class="w3-container w3-padding">
               <form name="form" method="post" action="adm_2.php"  enctype="multipart/form-data">
-              <h4 class="w3-opacity">ADD AN NEW EMPLOYEE</h4>
-                <input type="text"name="Employee_ID" placeholder="Employee_ID" required="required" id="Employee_ID">
+              <h4 class="w3-opacity">Add a new employee</h4>
+                <input type="text"name="Employee_ID" placeholder="Employee ID" required="required" id="Employee_ID">
                 <input type="text"name="Name" placeholder="Name" required="required" id="Name">
                 <input type="text"name="Age" placeholder="Age" required="required" id="Age">
-                <input type="text"name="Gender" placeholder="Gender" required="required" id="Gender">
+                Gender: 
+                <select name="Gender" id="Gender" required>
+                  <option value="Others"> Others </option>
+                  <option value="Male"> Male </option>
+                  <option value="Female"> Female </option>
+                </select>
+                <!-- <input type="text"name="Gender" placeholder="Gender" required="required" id="Gender"> -->
                 <p></p>
-                <input type="text"name="Position" placeholder="Position" required="required" id="Position">
                 <input type="text"name="Salary" placeholder="Salary" required="required" id="Salary">
-                <input type="text"name="password" placeholder="password" required="required" id="password">
+                <input type="text"name="password" placeholder="Password" required="required" id="password">
+                Position:
+                <select name="Position" id="Position" required>
+                  <option value="Front End"> Front End </option>
+                  <option value="Back End"> Back End </option>
+                  <option value="Testing"> Testing </option>
+                </select>
+                <p></p>
+                Entry Date:
                 <input type="date"name="Entry_date" placeholder="Entry_date" required="required" id="Entry_date">
                 <p></p>
                 <button type="submit" name="submit" class="w3-button w3-theme" value="Add Staff" onclick="act1()"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button> 
@@ -206,8 +219,8 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           <div class="w3-card w3-round w3-white">
             <div class="w3-container w3-padding">
               <form name="frm" method="post" action="adm_2.php"  enctype="multipart/form-data">
-              <h4 class="w3-opacity">DELETE AN EMPLOYEE</h4>
-              <input type="text"name="Employee_ID" placeholder="Employee_ID" id="Employee_ID"><p></p>
+              <h4 class="w3-opacity">Delete an employee</h4>
+              <input type="text"name="Employee_ID" placeholder="Employee ID" id="Employee_ID"><p></p>
               <button type="submint" name="submint" class="w3-button w3-theme" value="Delete" onclick="act2()"><i class="fa fa-chevron-left"></i> CONFIRM <i class="fa fa-chevron-right"></i></button> 
               <!-- <input type="button" name="" value="Add Staff"  onclick="act2()"  /> -->
               </form>
@@ -226,7 +239,6 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 <!-- End Page Container -->
 </div>
 <br>
-
 
 <footer class="w3-container w3-theme-d5">
   <p>Powered by <a href="https://github.com/as3ert/csc3170" target="_blank">Gruop 8</a></p>

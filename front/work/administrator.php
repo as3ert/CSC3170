@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Administrator</title>
+<title>Home Page</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -55,8 +55,8 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 			<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
 				<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
 				<a href="administrator.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Home</a>
-				<a href="adm_1.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-				<a href="adm_2.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
+				<a href="adm_1.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Manage Projects"><i class="fa fa-globe"></i></a>
+				<a href="adm_2.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Manage Employees"><i class="fa fa-user"></i></a>
 				<a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
 					<img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
 				</a>
@@ -82,11 +82,11 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 					<!-- Profile -->
 					<div class="w3-card w3-round w3-white">
 						<div class="w3-container">
-							<h4 class="w3-center">My Profile</h4>
-							<p class="w3-center"><img src="https://www.w3schools.com/w3images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
-							<hr>
-							<p><i class="fa fa-address-card fa-fw w3-margin-right w3-text-theme"></i><?php echo $administrator_Info['ADMINISTRATOR_ID']; ?></p>
-							<p><i class="fa fa-address-book fa-fw w3-margin-right w3-text-theme"></i><?php echo $administrator_Info['ADMINISTRATOR_NAME']; ?></p>
+						<h4 class="w3-center">My Profile</h4>
+						<p class="w3-center"><img src="https://www.w3schools.com/w3images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+						<hr>
+						<p><i class="fa fa-address-card fa-fw w3-margin-right w3-text-theme"></i> <?php echo $administrator_Info['ADMINISTRATOR_ID']; ?></p>
+						<p><i class="fa fa-address-book fa-fw w3-margin-right w3-text-theme"></i> <?php echo $administrator_Info['ADMINISTRATOR_NAME']; ?></p>
 						</div>
 					</div>
 					<br>
@@ -112,12 +112,12 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 					<!-- Company --> 
 					<div class="w3-card w3-round w3-white w3-hide-small">
 						<div class="w3-container">
-							<p>Company Informations</p>
+							<p>Company Information</p>
 							<p class="w3-small">Company ID: <?php echo $administrator_Info['SUBCOMPANY_ID']; ?></p>
-							<p class="w3-small">location: <?php echo $administrator_Info['LOCATION']; ?></p>
+							<p class="w3-small">Location: <?php echo $administrator_Info['LOCATION']; ?></p>
 							<p class="w3-small">Budget: <?php echo $administrator_Info['BUDGET']; ?></p>
-							<p class="w3-small">number of employees: <?php echo $staff['count']; ?></p>
-							<p class="w3-small">number of projects: <?php echo $projects['count']; ?></p>
+							<p class="w3-small">Number of employees: <?php echo $staff['count']; ?></p>
+							<p class="w3-small">Number of projects: <?php echo $projects['count']; ?></p>
 						</div>
 					</div>
 					<br>
@@ -138,12 +138,12 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 						$num = ++ $k;
 						echo "<section class='w3-container w3-card w3-white w3-round w3-margin' id={$num}><br>";
 						echo "<h6 class='w3-text-theme'><i class='fa fa-calendar fa-fw w3-margin-right'></i>{$project['START_DATE']} - {$project['END_DATE']}</h6>";
-						echo "<h4>{$project['PROJECT_NAME']}</h4>";
+						echo "<h4>Project Name: {$project['PROJECT_NAME']}</h4>";
 						echo "<hr class='w3-clear'>";
-						echo "<p>{$project['PROJECT_ID']}</p>";
-						echo "<p>Budget:{$project['BUDGET']}</p>";
-						echo "<p>Manager name:{$project['EMPLOYEE_NAME']}</hp>";
-						echo "<p>Manager ID:{$project['EMPLOYEE_ID']}</hp>";
+						echo "<p>Project ID: {$project['PROJECT_ID']}</p>";
+						echo "<p>Budget: {$project['BUDGET']}</p>";
+						echo "<p>Manager name: {$project['EMPLOYEE_NAME']}</hp>";
+						echo "<p>Manager ID: {$project['EMPLOYEE_ID']}</hp>";
 						echo "</section>";
 						}
 					?>

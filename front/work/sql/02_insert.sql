@@ -42,6 +42,6 @@ INSERT INTO `administrators` (`ADMINISTRATOR_ID`, `SUBCOMPANY_ID`,
 ('100003', '000003', 'Tom', '123456');
 
 INSERT INTO `subcompanies` (`SUBCOMPANY_ID`, `BUDGET`, `LOCATION`) VALUES
-('000001', '200000', 'Shenzhen'),
-('000002', '200000', 'New York'),
-('000003', '200000', 'Berlin');
+('000001', '1000000', 'Shenzhen'),
+('000002', '1000000', 'New York'),
+('000003', '1000000', 'Berlin');
