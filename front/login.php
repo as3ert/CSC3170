@@ -19,7 +19,7 @@
 	    $row = $result->fetch_assoc();
 	    if ($row) {
     	    setcookie('id',$name);
-    		echo "<script>javascript:alert('Login successfully!!');location.href='UI1.php';</script>";
+    		echo "<script>javascript:location.href='administrator.php';</script>";
     		exit;
 	    }else{
     		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
@@ -33,7 +33,7 @@
 	    if ($row) {
     	    setcookie('is_admin',0);
     	    setcookie('id',$name);
-    		echo "<script>javascript:alert('Login successfully!!');location.href='worker.php';</script>";
+    		echo "<script>javascript:location.href='worker.php';</script>";
     		exit;
 	    } else {
     		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
@@ -68,7 +68,7 @@ html, body, h1, h2, h3, h4, h5, h6 {font-family: "Open Sans", sans-serif}
 	<div class="w3-top">
     	<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
     	<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-    	<a href="login.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-briefcase w3-margin-right"></i>Company</a>
+    	<a href="login.php" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-globe w3-margin-right"></i>InnovaSoft Company</a>
     	<a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
       	</a>
   		</div>
