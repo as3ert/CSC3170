@@ -40,6 +40,4 @@ Our team consists of the following members, listed in the table below (the team 
 
 ## 6. How to run
 
-## 7. Presentation Video Link
-
-## 8. Presentation slides
+## 7. Presentation slides
