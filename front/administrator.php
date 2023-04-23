@@ -17,7 +17,6 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 		require './config.php';
 		$id = $_COOKIE['id'];
 		if (empty($id)) {
-			// echo "<script>location.href='login.php';</script>";
 			exit;
 		}
 		$sql = "SELECT * FROM administrators LEFT JOIN subcompanies ON administrators.SUBCOMPANY_ID = subcompanies.SUBCOMPANY_ID WHERE administrators.ADMINISTRATOR_ID = {$id}";
@@ -30,7 +29,6 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
     	// check the number of workers
 		$sql = "SELECT count(*) as count from employees WHERE LOCATION = '{$company_Info['LOCATION']}'";
-		// var_dump($sql);exit();
 		$result = $mysqli->query($sql);
 		$staff = $result->fetch_assoc();
 
@@ -40,10 +38,10 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 		$projects = $result->fetch_assoc();
 
 		// check the projects belong to the boss
-    $sql =  "SELECT projects.*,managers.MANAGER_ID,employees.* FROM (projects left join managers ON projects.PROJECT_ID = managers.PROJECT_ID) left join employees ON managers.MANAGER_ID = employees.EMPLOYEE_ID  WHERE ADMINISTRATOR_ID = {$administrator_Info['ADMINISTRATOR_ID']}";
+    	$sql =  "SELECT projects.*,managers.MANAGER_ID,employees.* FROM (projects left join managers ON projects.PROJECT_ID = managers.PROJECT_ID) left join employees ON managers.MANAGER_ID = employees.EMPLOYEE_ID  WHERE ADMINISTRATOR_ID = {$administrator_Info['ADMINISTRATOR_ID']}";
 		$projectrs= $mysqli->query($sql);
 		$projectList = [];
-		foreach($projectrs as $k => $item){
+		foreach ($projectrs as $k => $item) {
 			array_push($projectList,$item);
 		}
   	?>

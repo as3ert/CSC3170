@@ -14,24 +14,24 @@
 	</head>
 
 	<?php 
-	require './config.php';
-	$id = $_COOKIE['id'];
-	if (empty($id)) {
-		// If the cookie is empty, redirect to the login page
-		echo "<script>location.href='login.php';</script>";
-		exit;
-	}
-	$sql = "SELECT * FROM employees where EMPLOYEE_ID = {$id}";
-	$result = $mysqli->query($sql);
-	$adminInfo = $result->fetch_assoc();
+		require './config.php';
+		$id = $_COOKIE['id'];
+		if (empty($id)) {
+			// If the cookie is empty, redirect to the login page
+			echo "<script>location.href='login.php';</script>";
+			exit;
+		}
+		$sql = "SELECT * FROM employees where EMPLOYEE_ID = {$id}";
+		$result = $mysqli->query($sql);
+		$adminInfo = $result->fetch_assoc();
 
-	// Get the project list
-	$sql =  "SELECT * FROM jobs LEFT JOIN projects on jobs.PROJECT_ID = projects.PROJECT_ID LEFT JOIN managers on projects.PROJECT_ID = managers.PROJECT_ID WHERE EMPLOYEE_ID = {$id}";
-	$rs= $mysqli->query($sql);
-	$projectList = [];
-	foreach($rs as $k => $item) {
-		array_push($projectList,$item);
-	}
+		// Get the project list
+		$sql =  "SELECT * FROM jobs LEFT JOIN projects on jobs.PROJECT_ID = projects.PROJECT_ID LEFT JOIN managers on projects.PROJECT_ID = managers.PROJECT_ID WHERE EMPLOYEE_ID = {$id}";
+		$rs= $mysqli->query($sql);
+		$projectList = [];
+		foreach ($rs as $k => $item) {
+			array_push($projectList,$item);
+		}
 	?>
 
 	<body class="w3-theme-l5">
@@ -75,13 +75,12 @@
 					<!-- Padding -->
 					<div class="w3-row-padding">
 						<div class="w3-col m12">
-							<div class="w3-container w3-padding w3-card w3-round w3-theme-d4">
-							</div>
+							<div class="w3-container w3-padding w3-card w3-round w3-theme-d4"></div>
 						</div>
 					</div>
 
 					<?php
-						foreach($projectList as $k => $project){
+						foreach ($projectList as $k => $project) {
 							echo "<div class='w3-container w3-card w3-white w3-round w3-margin' id='prj1'><br>";
 							echo "<h2 class='w3-text-grey w3-padding-10'><i class='fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-theme'></i>{$project['PROJECT_NAME']}</h2>";
 							echo "<div class='w3-container'>";

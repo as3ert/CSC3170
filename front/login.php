@@ -1,51 +1,51 @@
 <?php
   require './config.php';
 
-  if (isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $password = $_POST['password'];
+	if (isset($_POST['submit'])) {
+		$name = $_POST['name'];
+		$password = $_POST['password'];
 
-	// Check whether the first digit is 0 or 1, if not, report an error
-    $first = $name[0];
-    if (!in_array($first, [0,1])) {
-    	echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
-    	exit;
-    }
+		// Check whether the first digit is 0 or 1, if not, report an error
+		$first = $name[0];
+		if (!in_array($first, [0,1])) {
+			echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
+			exit;
+		}
 
-	// If the first digit is 1, query the administrator table, if the query result is not empty, set the cookie and jump to the administrator page, otherwise report an error
-    if ($first == 1) {
-	    $sql = "select * from administrators where (ADMINISTRATOR_ID='$name') and (PASSWORD ='$password')";
-	    $result = $mysqli->query($sql);
-	    $row = $result->fetch_assoc();
-	    if ($row) {
-    	    setcookie('id',$name);
-    		echo "<script>javascript:location.href='administrator.php';</script>";
-    		exit;
-	    }else{
-    		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
-    		exit;
-	    }
-	// If the first digit is 0, query the employee table, if the query result is not empty, set the cookie and jump to the employee page, otherwise report an error
-    } elseif ($first == 0) {
-	    $sql = "select * from employees where (EMPLOYEE_ID='$name') and (PASSWORD ='$password')";
-	    $result = $mysqli->query($sql);
-	    $row = $result->fetch_assoc();
-	    if ($row) {
-    	    setcookie('is_admin',0);
-    	    setcookie('id',$name);
-    		echo "<script>javascript:location.href='worker.php';</script>";
-    		exit;
-	    } else {
-    		echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
-    		exit;
-	    }
-	// If the first digit is not 0 or 1, report an error
-    } else {
-    	echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
-    }
-}
-
+		// If the first digit is 1, query the administrator table, if the query result is not empty, set the cookie and jump to the administrator page, otherwise report an error
+		if ($first == 1) {
+			$sql = "select * from administrators where (ADMINISTRATOR_ID='$name') and (PASSWORD ='$password')";
+			$result = $mysqli->query($sql);
+			$row = $result->fetch_assoc();
+			if ($row) {
+				setcookie('id',$name);
+				echo "<script>javascript:location.href='administrator.php';</script>";
+				exit;
+			} else {
+				echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
+				exit;
+			}
+		// If the first digit is 0, query the employee table, if the query result is not empty, set the cookie and jump to the employee page, otherwise report an error
+		} elseif ($first == 0) {
+			$sql = "select * from employees where (EMPLOYEE_ID='$name') and (PASSWORD ='$password')";
+			$result = $mysqli->query($sql);
+			$row = $result->fetch_assoc();
+			if ($row) {
+				setcookie('is_admin',0);
+				setcookie('id',$name);
+				echo "<script>javascript:location.href='worker.php';</script>";
+				exit;
+			} else {
+				echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
+				exit;
+			}
+		// If the first digit is not 0 or 1, report an error
+		} else {
+			echo "<script>javascript:alert('Login failure!!');location.href='login.php';</script>";
+		}
+	}
 ?>
+
 <html lang="en">
 <head>
 <title>Login</title>
