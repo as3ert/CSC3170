@@ -19,7 +19,7 @@ Our team consists of the following members, listed in the table below (the team 
 | 120090581  | 丁奕杰       | todo                       | todo |
 | 120090873  | 张雨阳       | todo                       | todo |
 | 120090090  | 李浩贤       | todo                       | todo |
-| 121090344  | 刘铭昊       | todo                       | todo |
+| 121090344  | 刘铭昊       | todo                       | [@Marekkel](https://github.com/Marekkel) |
 | 120090102  | 曹若曦       | todo                       | todo |
 
 ## 3. Project Specification
